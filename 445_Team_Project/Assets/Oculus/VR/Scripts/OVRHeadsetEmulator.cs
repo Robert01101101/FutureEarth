@@ -14,6 +14,9 @@ ANY KIND, either express or implied. See the License for the specific language g
 permissions and limitations under the License.
 ************************************************************************************/
 
+// NOTE: this script is modified. Custom code is marked by "ROBERT CUSTOM CODE"
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,10 +29,13 @@ public class OVRHeadsetEmulator : MonoBehaviour {
 		AlwaysOn
 	}
 
-	public OpMode opMode = OpMode.EditorOnly;
+    //ROBERT CUSTOM CODE
+    public bool CUSTOM_PC_DEBUG;
+    public GameObject overlay, documentation;
+
+    public OpMode opMode = OpMode.EditorOnly;
 	public bool resetHmdPoseOnRelease = true;
 	public bool resetHmdPoseByMiddleMouseButton = true;
-
 	public KeyCode[] activateKeys = new KeyCode[] { KeyCode.LeftControl, KeyCode.RightControl };
 
 	public KeyCode[] pitchKeys = new KeyCode[] { KeyCode.LeftAlt, KeyCode.RightAlt };
@@ -52,13 +58,33 @@ public class OVRHeadsetEmulator : MonoBehaviour {
 
 	private CursorLockMode previousCursorLockMode = CursorLockMode.None;
 
-	// Use this for initialization
-	void Start () {
-	}
+    //ROBERT CUSTOM CODE
+    void Start () {
+        overlay.SetActive(CUSTOM_PC_DEBUG);
+        documentation.SetActive(false);
+    }
+
+    IEnumerator RaiseCam()
+    {
+        yield return new WaitForSeconds(.1f);
+        manager.headPoseRelativeOffsetTranslation = new Vector3(0, 1.4f, 0);
+    }
 
 	// Update is called once per frame
 	void Update () {
-		if (!emulatorHasInitialized)
+        //ROBERT CUSTOM CODE
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                documentation.SetActive(!documentation.activeInHierarchy);
+            } else
+            {
+                overlay.SetActive(!overlay.activeInHierarchy);
+            }
+        }
+
+        if (!emulatorHasInitialized)
 		{
 			if (OVRManager.OVRManagerinitialized)
 			{
@@ -68,7 +94,9 @@ public class OVRHeadsetEmulator : MonoBehaviour {
 				recordedHeadPoseRelativeOffsetRotation = manager.headPoseRelativeOffsetRotation;
 				emulatorHasInitialized = true;
 				lastFrameEmulationActivated = false;
-			}
+                //ROBERT CUSTOM CODE
+                if (CUSTOM_PC_DEBUG) StartCoroutine(RaiseCam());
+            }
 			else
 				return;
 		}
@@ -91,16 +119,19 @@ public class OVRHeadsetEmulator : MonoBehaviour {
 			{
 				manager.headPoseRelativeOffsetTranslation = Vector3.zero;
 				manager.headPoseRelativeOffsetRotation = Vector3.zero;
-			}
+                //ROBERT CUSTOM CODE
+                if (CUSTOM_PC_DEBUG) manager.headPoseRelativeOffsetTranslation = new Vector3(0, 1.4f, 0);
+            }
 			else
 			{
 				Vector3 emulatedTranslation = manager.headPoseRelativeOffsetTranslation;
 				float deltaMouseScrollWheel = Input.GetAxis("Mouse ScrollWheel");
 				float emulatedHeight = deltaMouseScrollWheel * MOUSE_SCALE_HEIGHT;
 				emulatedTranslation.y += emulatedHeight;
-				manager.headPoseRelativeOffsetTranslation = emulatedTranslation;
 
-				float deltaX = Input.GetAxis("Mouse X");
+                manager.headPoseRelativeOffsetTranslation = emulatedTranslation;
+
+                float deltaX = Input.GetAxis("Mouse X");
 				float deltaY = Input.GetAxis("Mouse Y");
 
 				Vector3 emulatedAngles = manager.headPoseRelativeOffsetRotation;
@@ -139,7 +170,9 @@ public class OVRHeadsetEmulator : MonoBehaviour {
 				{
 					manager.headPoseRelativeOffsetTranslation = Vector3.zero;
 					manager.headPoseRelativeOffsetRotation = Vector3.zero;
-				}
+                    //ROBERT CUSTOM CODE
+                    if (CUSTOM_PC_DEBUG) manager.headPoseRelativeOffsetTranslation = new Vector3(0, 1.4f, 0);
+                }
 			}
 		}
 		lastFrameEmulationActivated = emulationActivated;
@@ -159,8 +192,16 @@ public class OVRHeadsetEmulator : MonoBehaviour {
 		foreach (KeyCode key in activateKeys)
 		{
 			if (Input.GetKey(key))
-				return true;
+            {
+                //ROBERT CUSTOM CODE
+                return !CUSTOM_PC_DEBUG;
+            }
+				
 		}
+        if (CUSTOM_PC_DEBUG)
+        {
+            return true;
+        }
 
 		return false;
 	}
