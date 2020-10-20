@@ -370,7 +370,8 @@ public class OVRGrabber : MonoBehaviour
         m_grabbedObj = null;
     }
 
-    protected virtual void GrabVolumeEnable(bool enabled)
+    //CUSTOM CODE: switched from protected to public method
+    public virtual void GrabVolumeEnable(bool enabled)
     {
         if (m_grabVolumeEnabled == enabled)
         {

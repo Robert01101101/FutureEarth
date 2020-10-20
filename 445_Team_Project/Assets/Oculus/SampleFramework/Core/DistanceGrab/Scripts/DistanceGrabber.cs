@@ -348,7 +348,7 @@ namespace OculusSampleFramework
             return dgOut != null;
         }
 
-        protected override void GrabVolumeEnable(bool enabled)
+        public override void GrabVolumeEnable(bool enabled)
         {
             if(m_useSpherecast) enabled = false;
             base.GrabVolumeEnable(enabled);

@@ -428,7 +428,7 @@ public class OvrAvatar : MonoBehaviour
             lCol.radius = .01f;
             lCol.height = .08f;
             lCol.direction = 0;
-            lCol.center = new Vector3(-0.04f, 0, 0);
+            lCol.center = new Vector3(0.04f, 0, 0);
             lCol.isTrigger = true;
 
             //___________________________________________________________Add CLIPPY
@@ -437,8 +437,10 @@ public class OvrAvatar : MonoBehaviour
             //Instantiate at hand position. Rotate to face right direction
             GameObject clippyR = Instantiate(clippyPrefab, new Vector3(rHand.transform.position.x, rHand.transform.position.y, rHand.transform.position.z), 
                 rHand.transform.rotation * Quaternion.Euler(90f, -15f, -90f));
+            clippyR.name = "clippyR";
             GameObject clippyL = Instantiate(clippyPrefab, new Vector3(lHand.transform.position.x, lHand.transform.position.y, lHand.transform.position.z), 
                 lHand.transform.rotation * Quaternion.Euler(90f, -15f, 90f));
+            clippyL.name = "clippyL";
             //Set as child of hand
             clippyR.transform.parent = rHand.transform;
             clippyL.transform.parent = lHand.transform;

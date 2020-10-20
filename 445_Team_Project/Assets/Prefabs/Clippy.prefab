@@ -609,3 +609,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clippyUiPrefab: {fileID: 2550309953107637175, guid: 6e1ef196817839145b211fb35e4e4fc2,
     type: 3}
+  canvas: {fileID: 5984120325809210419}
+  btnLabel: {fileID: 6592394676789169970}
