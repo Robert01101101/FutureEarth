@@ -12,6 +12,8 @@ using UnityEditor;
 using UnityEngine.Events;
 #endif
 
+// NOTE: this script is modified. Custom code is marked by "CUSTOM CODE"
+
 [System.Serializable]
 public class AvatarLayer
 {
@@ -43,6 +45,10 @@ public class PacketRecordSettings
 
 public class OvrAvatar : MonoBehaviour
 {
+    //CUSTOM CODE
+    GameObject rTip, lTip;
+    CapsuleCollider rCol, lCol;
+
     [Header("Avatar")]
     public IntPtr sdkAvatar = IntPtr.Zero;
     public string oculusUserID;
@@ -387,6 +393,37 @@ public class OvrAvatar : MonoBehaviour
             CAPI.ovrAvatarComponent_Get(rightHandComponnet.renderComponent, FetchName, ref dummyComponent);
             AddAvatarComponent(ref HandRight, dummyComponent);
             HandRight.isLeftHand = false;
+
+            //CUSTOM CODE
+            StartCoroutine(AddColliderToFingerForUI());
+        }
+
+        //CUSTOM CODE
+        IEnumerator AddColliderToFingerForUI()
+        {
+            yield return new WaitForSeconds(.5f);
+
+            rTip = Util.FindInactiveChild(gameObject, "hands:b_r_index_ignore");
+            lTip = Util.FindInactiveChild(gameObject, "hands:b_l_index_ignore");
+
+            Debug.Log("hello");
+            Debug.Log(rTip);
+
+            rCol = rTip.AddComponent(typeof(CapsuleCollider)) as CapsuleCollider;
+
+            rCol.radius = .01f;
+            rCol.height = .08f;
+            rCol.direction = 0;
+            rCol.center = new Vector3(-0.04f, 0, 0);
+            rCol.isTrigger = true;
+
+            lCol = lTip.AddComponent(typeof(CapsuleCollider)) as CapsuleCollider;
+
+            lCol.radius = .01f;
+            lCol.height = .08f;
+            lCol.direction = 0;
+            lCol.center = new Vector3(-0.04f, 0, 0);
+            lCol.isTrigger = true;
         }
 
         if (CAPI.ovrAvatarPose_GetBodyComponent(sdkAvatar, ref bodyComponent))

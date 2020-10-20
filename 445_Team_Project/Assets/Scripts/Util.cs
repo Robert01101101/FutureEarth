@@ -9,4 +9,19 @@ public class Util : MonoBehaviour
     {
         return b1 + (s - a1) * (b2 - b1) / (a2 - a1);
     }
+
+    //From: https://answers.unity.com/questions/890636/find-an-inactive-game-object.html?_ga=2.231808671.1877443542.1603150124-1744466240.1597356417
+    //Using Recources instead would risk modifying prefabs
+    public static GameObject FindInactiveChild(GameObject parent, string name)
+    {
+        Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == name)
+            {
+                return t.gameObject;
+            }
+        }
+        return null;
+    }
 }
