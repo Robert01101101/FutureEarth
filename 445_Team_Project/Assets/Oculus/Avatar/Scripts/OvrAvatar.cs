@@ -13,6 +13,9 @@ using UnityEngine.Events;
 #endif
 
 // NOTE: this script is modified. Custom code is marked by "CUSTOM CODE"
+// Modifications for:
+// - Adding collider to index finger to interact with VRbtn.cs
+// - Adding CLIPPY model
 
 [System.Serializable]
 public class AvatarLayer
@@ -46,8 +49,9 @@ public class PacketRecordSettings
 public class OvrAvatar : MonoBehaviour
 {
     //CUSTOM CODE
-    GameObject rTip, lTip;
+    GameObject rTip, lTip, rHand, lHand;
     CapsuleCollider rCol, lCol;
+    public GameObject clippyPrefab;
 
     [Header("Avatar")]
     public IntPtr sdkAvatar = IntPtr.Zero;
@@ -403,10 +407,12 @@ public class OvrAvatar : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
 
+            //Hands finished initializing, begin adding customizations
+
+            //Add collider to index fingers && configure size, etc
             rTip = Util.FindInactiveChild(gameObject, "hands:b_r_index_ignore");
             lTip = Util.FindInactiveChild(gameObject, "hands:b_l_index_ignore");
 
-            Debug.Log("hello");
             Debug.Log(rTip);
 
             rCol = rTip.AddComponent(typeof(CapsuleCollider)) as CapsuleCollider;
@@ -424,6 +430,21 @@ public class OvrAvatar : MonoBehaviour
             lCol.direction = 0;
             lCol.center = new Vector3(-0.04f, 0, 0);
             lCol.isTrigger = true;
+
+            //___________________________________________________________Add CLIPPY
+            rHand = Util.FindInactiveChild(gameObject, "hands:b_r_hand");
+            lHand = Util.FindInactiveChild(gameObject, "hands:b_l_hand");
+            //Instantiate at hand position. Rotate to face right direction
+            GameObject clippyR = Instantiate(clippyPrefab, new Vector3(rHand.transform.position.x, rHand.transform.position.y, rHand.transform.position.z), 
+                rHand.transform.rotation * Quaternion.Euler(90f, -15f, -90f));
+            GameObject clippyL = Instantiate(clippyPrefab, new Vector3(lHand.transform.position.x, lHand.transform.position.y, lHand.transform.position.z), 
+                lHand.transform.rotation * Quaternion.Euler(90f, -15f, 90f));
+            //Set as child of hand
+            clippyR.transform.parent = rHand.transform;
+            clippyL.transform.parent = lHand.transform;
+            //Slide up towards elbow a tiny bit
+            clippyR.transform.localPosition = new Vector3(0.02f, 0, 0);
+            clippyL.transform.localPosition = new Vector3(-0.02f, 0, 0);
         }
 
         if (CAPI.ovrAvatarPose_GetBodyComponent(sdkAvatar, ref bodyComponent))

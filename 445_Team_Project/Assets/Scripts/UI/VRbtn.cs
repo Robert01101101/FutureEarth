@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(Button))]
 [RequireComponent(typeof(RawImage))]
 [RequireComponent(typeof(Rigidbody))]
@@ -38,8 +38,8 @@ public class VRbtn : MonoBehaviour
         //Ensure collider has correct size
         float rw = rectTransform.rect.width;
         float rh = rectTransform.rect.height;
-        collider.size = new Vector3(rw, rh, 0.1f);
-        collider.center = new Vector3(0,0, 0.03f);
+        collider.size = new Vector3(rw, rh, 0.02f);
+        collider.center = new Vector3(0,0, 0.01f);
     }
 
     private void OnTriggerEnter(Collider other)
