@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Placeholder class for the project
+/// </summary> 
+
 public class PlayerCtrl : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    //A3
+    AudioSource buttonSound;
+
+    private void Start()
     {
-        
+        buttonSound = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayAudioBtn()
     {
-        
+        buttonSound.Stop();
+        buttonSound.Play();
     }
 }

@@ -8,10 +8,15 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RawImage))]
 [RequireComponent(typeof(Rigidbody))]
 
-//In order to track where the player is pointing we need to use colliders.
-//Instead  of relying on Standalone Input we manually trigger the button on collision with finger.
-//This class ensures the Button is initialized correctly & then triggers onClick() when detecting a collision.
-//Check the Button Component's onClick properties to check what methods it calls.
+/// <summary>
+/// In order to track where the player is pointing we need to use colliders.
+/// Instead  of relying on Standalone Input we manually trigger the button on collision with finger.
+/// This class is attached to every tappable button, and it handles:
+/// -  Initialize the Button correctly (resize collider, save color pallette)
+/// -  Manually trigger onClick() when detecting a collision.
+/// 
+/// Check the Button Component's onClick properties to check what methods it calls.
+/// </summary> 
 
 public class VRbtn : MonoBehaviour
 {
@@ -46,9 +51,14 @@ public class VRbtn : MonoBehaviour
     {
         if (other.gameObject.name == "hands:b_r_index_ignore" || other.gameObject.name == "hands:b_l_index_ignore")
         {
-            Debug.Log("VRbtn -> pressed");
-            thisButton.onClick.Invoke();
-            image.color = pressedCol;
+            if (thisButton.interactable)
+            {
+                Debug.Log("VRbtn -> pressed");
+                thisButton.onClick.Invoke();
+                image.color = pressedCol;
+                PlayerCtrl playerCtrl = GameObject.Find("OVRPlayerControllerCustom").GetComponent<PlayerCtrl>();
+                playerCtrl.PlayAudioBtn();
+            }
         }
     }
 
@@ -61,5 +71,7 @@ public class VRbtn : MonoBehaviour
             image.color = defaultCol;
         }
     }
+
+
 
 }

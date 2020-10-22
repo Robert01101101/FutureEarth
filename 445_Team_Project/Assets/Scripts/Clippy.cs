@@ -5,25 +5,32 @@ using TMPro;
 
 /// <summary>
 /// Clippy Controller Class. Responsible for:
-/// - Init correctly (facing player)
+/// - Init wristband UI correctly (facing player)
 /// - Control wrist buttons (open / close clippyUI)
 /// 
 /// Note: Keep in mind that there are TWO clippy instances - one on each arm.
+/// Problem: two instances store static values.
+/// TODO - find a better approach. Ideas: singleton instance? Move methods to ClippyUI?
 /// </summary>
 
 public class Clippy : MonoBehaviour
 {
     ///////////////// Public fields
-    public GameObject clippyUiPrefab, canvas;
+    public GameObject clippyUiPrefab, canvas, seedPrefab;
     public TextMeshProUGUI btnLabel;
 
     ///////////////// Private fields
     private GameObject player;
     protected GameObject uiInstance;
+    protected ClippyUI uiInstanceClippyUI;
     private OVRGrabber grabberL, grabberR;
     private static bool clippyOpen = false;
     private static bool temporaryLock = false;
     private Clippy otherSideClippy;
+
+    //A3 - spawn UI on correct screen (skip intro once done)
+    private static bool introDone = false;
+    private static int treeCount = 0;
 
     private void Start()
     {
@@ -50,12 +57,14 @@ public class Clippy : MonoBehaviour
                    player.transform.rotation);
                 otherSideClippy.uiInstance = uiInstance;
 
-                //position 50cm in front of player gaze
-                uiInstance.transform.position += player.transform.forward * .5f;
+                //position 55cm in front of player gaze
+                uiInstance.transform.position += player.transform.forward * .55f;
 
-                uiInstance.GetComponent<ClippyUI>().SetClippy(this);
+                uiInstanceClippyUI = uiInstance.GetComponent<ClippyUI>();
+                uiInstanceClippyUI.SetClippy(this);
+                if (introDone) uiInstanceClippyUI.Init(treeCount);
+
                 Debug.Log("opened Clippy");
-                Debug.Log(uiInstance);
                 SwapLabels();
             }
             else
@@ -103,5 +112,30 @@ public class Clippy : MonoBehaviour
     {
         GameObject avatar = GameObject.Find("LocalAvatar");
         otherSideClippy = (gameObject.name == "clippyL") ? Util.FindInactiveChild(avatar, "clippyR").GetComponent<Clippy>() : Util.FindInactiveChild(avatar, "clippyL").GetComponent<Clippy>();
+    }
+
+    //////////////////////////////////////////////////////////////////////////// A3
+    public void IntroDone()
+    {
+        //skip intro in the future
+        introDone = true;
+        if (!GetIntroDone()) otherSideClippy.IntroDone();
+    }
+
+    public bool GetIntroDone() { return introDone; }
+
+    public void SpawnSeed(int type)
+    {
+        GameObject seed = Instantiate(seedPrefab, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z),
+                   Quaternion.identity);
+        seed.GetComponent<Seed>().SetType(type);
+
+        //position 55cm in front of player gaze
+        seed.transform.position += player.transform.forward * .4f;
+    }
+
+    public static void IncreaseTreeCount()
+    {
+        treeCount++;
     }
 }

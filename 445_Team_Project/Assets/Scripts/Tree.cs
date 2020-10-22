@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //To prevent setting up the GameObject wrong. It's still reccommended to attach and configure the other components, but this prevents fatal errors if forgotten.
-[RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(Collider))]
+
+/// <summary>
+/// This class is attached to every tree grown. It handles:
+/// -  Tree growth
+/// -  Tree rotation
+/// 
+/// TODO: Add tree health status, change appearance when health poor, etc.
+/// </summary> 
 
 public class Tree : MonoBehaviour
 {
     //Public fields
-    public Mesh[] treeMeshes;
+    public GameObject[] treeTypes;
 
     //Private fields
     Transform treeTransform;
     int turnDirection;
-    MeshFilter meshFilter;
     
 
-
-    void Start()
+    //A3 (was originally in start with always random pick)
+    //Init method: define tree type, start tree growth (grow in size, rotate)
+    public void SetTreeType(int type)
     {
+        GameObject pick = (type == 3) ? treeTypes[Random.Range(0, treeTypes.Length)] : treeTypes[type];
+        GameObject treeInstance = Instantiate(pick, transform.position, Quaternion.identity, transform);
+        treeInstance.transform.SetParent(transform);
+
         //assign transform variable & set size to 0
         treeTransform = gameObject.transform;
         gameObject.transform.localScale = Vector3.zero;
@@ -28,13 +38,12 @@ public class Tree : MonoBehaviour
         //Randomize: turn either left or right & select random mesh
         turnDirection = (Random.value < 0.5) ? -1 : 1;
 
-        meshFilter = GetComponent<MeshFilter>();
-        meshFilter.mesh = treeMeshes[Random.Range(0,treeMeshes.Length)];
-
         //Start growth
         StartCoroutine(TreeCoroutine(5));
-    }
 
+        //A3 - track tree count
+        Clippy.IncreaseTreeCount();
+    }
 
     
 
@@ -60,5 +69,8 @@ public class Tree : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
+        //Activate perch targets once growth complete
+        Util.FindInactiveChild(gameObject, "perchParent").SetActive(true);
     }
 }

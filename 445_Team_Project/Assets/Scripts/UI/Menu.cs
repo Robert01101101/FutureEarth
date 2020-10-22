@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Placeholder class for the project
+/// </summary> 
+
 public class Menu : MonoBehaviour
 {
     public TextMeshProUGUI label;
