@@ -14,8 +14,8 @@ ANY KIND, either express or implied. See the License for the specific language g
 permissions and limitations under the License.
 ************************************************************************************/
 
-// NOTE: this script is modified. Custom code is marked by "CUSTOM CODE"
 
+// NOTE: this script is modified. Custom code is marked by "CUSTOM CODE"
 
 using System;
 using UnityEngine;
@@ -39,6 +39,7 @@ public class OVRGrabbable : MonoBehaviour
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
+
 
     //CUSTOM CODE. From: https://www.patreon.com/posts/unity-3d-drag-22917454 
     private Vector3 mOffset;
