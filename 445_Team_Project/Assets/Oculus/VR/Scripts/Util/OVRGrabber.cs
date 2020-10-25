@@ -56,9 +56,14 @@ public class OVRGrabber : MonoBehaviour
     [SerializeField]
     protected OVRInput.Controller m_controller;
 
-	// You can set this explicitly in the inspector if you're using m_moveHandPosition.
-	// Otherwise, you should typically leave this null and simply parent the hand to the hand anchor
-	// in your scene, using Unity's inspector.
+    public OVRInput.Controller GetController()
+    {
+        return m_controller;
+    }
+
+    // You can set this explicitly in the inspector if you're using m_moveHandPosition.
+    // Otherwise, you should typically leave this null and simply parent the hand to the hand anchor
+    // in your scene, using Unity's inspector.
     [SerializeField]
     protected Transform m_parentTransform;
 
@@ -326,6 +331,22 @@ public class OVRGrabber : MonoBehaviour
         if (m_grabbedObj == null)
         {
             return;
+        }
+
+        // Set up offsets for grabbed object desired position relative to hand.
+        m_grabbedObjectPosOff = m_gripTransform.localPosition;
+        if (m_grabbedObj.snapOffset)
+        {
+            Vector3 snapOffset = m_grabbedObj.snapOffset.position;
+            if (m_controller == OVRInput.Controller.LTouch) snapOffset.x = -snapOffset.x;
+            m_grabbedObjectPosOff += snapOffset;
+        }
+
+        m_grabbedObjectRotOff = m_gripTransform.localRotation;
+        if (m_grabbedObj.snapOffset)
+        {
+            m_grabbedObjectRotOff = m_grabbedObj.snapOffset.rotation * m_grabbedObjectRotOff;
+            if (m_controller == OVRInput.Controller.LTouch) m_grabbedObjectRotOff = Quaternion.Inverse(m_grabbedObjectRotOff);
         }
 
         Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;

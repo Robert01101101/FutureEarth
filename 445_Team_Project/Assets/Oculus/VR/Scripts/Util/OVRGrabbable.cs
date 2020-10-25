@@ -14,9 +14,6 @@ ANY KIND, either express or implied. See the License for the specific language g
 permissions and limitations under the License.
 ************************************************************************************/
 
-// NOTE: this script is modified. Custom code is marked by "ROBERT CUSTOM CODE"
-
-
 using System;
 using UnityEngine;
 
@@ -40,41 +37,10 @@ public class OVRGrabbable : MonoBehaviour
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
 
-    //ROBERT CUSTOM CODE. From: https://www.patreon.com/posts/unity-3d-drag-22917454 
-    private Vector3 mOffset;
-    private float mZCoord;
-
-    void OnMouseDown()
-    {
-        mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-
-        // Store offset = gameobject world pos - mouse world pos
-        mOffset = gameObject.transform.position - GetMouseAsWorldPoint();
-    }
-
-    private Vector3 GetMouseAsWorldPoint()
-    {
-        // Pixel coordinates of mouse (x,y)
-        Vector3 mousePoint = Input.mousePosition;
-
-        // z coordinate of game object on screen
-        mousePoint.z = mZCoord;
-
-        // Convert it to world points
-        return Camera.main.ScreenToWorldPoint(mousePoint);
-
-    }
-
-    void OnMouseDrag()
-    {
-        transform.position = GetMouseAsWorldPoint() + mOffset;
-    }
-
-
-/// <summary>
-/// If true, the object can currently be grabbed.
-/// </summary>
-public bool allowOffhandGrab
+	/// <summary>
+	/// If true, the object can currently be grabbed.
+	/// </summary>
+    public bool allowOffhandGrab
     {
         get { return m_allowOffhandGrab; }
     }
