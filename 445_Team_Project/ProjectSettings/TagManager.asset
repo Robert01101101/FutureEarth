@@ -7,6 +7,7 @@ TagManager:
   - lb_bird
   - lb_groundTarget
   - lb_perchTarget
+  - player_forwardposition
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - 
   - 
   - Ground
-  - 
+  - Player
   - 
   - 
   - 
