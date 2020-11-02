@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 400000}
   - component: {fileID: 11400000}
+  - component: {fileID: 1590402195}
   m_Layer: 0
-  m_Name: _livingBirdsController
+  m_Name: GameCtrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35acec13e92dc0846a893a2496fea9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idealNumberOfBirds: 20
-  maximumNumberOfBirds: 40
+  idealNumberOfBirds: 0
+  maximumNumberOfBirds: 50
   currentCamera: {fileID: 0}
   unspawnDistance: 10
   highQuality: 1
-  collideWithObjects: 1
+  collideWithObjects: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -59,4 +60,16 @@ MonoBehaviour:
   chickadee: 1
   sparrow: 1
   goldFinch: 1
-  crow: 1
+  crow: 0
+--- !u!114 &1590402195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20fe7aa41b685c24c9b4589d4392157b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

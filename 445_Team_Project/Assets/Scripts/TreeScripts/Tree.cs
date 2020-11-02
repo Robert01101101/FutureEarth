@@ -9,6 +9,7 @@ using UnityEngine;
 /// This class is attached to every tree grown. It handles:
 /// -  Tree growth
 /// -  Tree rotation
+/// -  Tree health
 /// 
 /// TODO: Add tree health status, change appearance when health poor, etc.
 /// </summary> 
@@ -21,13 +22,21 @@ public class Tree : MonoBehaviour
     //Private fields
     Transform treeTransform;
     int turnDirection;
+    CapsuleCollider treeCollider;
+
+    bool dead = false;
+    bool growing = false;
     
 
     //A3 (was originally in start with always random pick)
     //Init method: define tree type, start tree growth (grow in size, rotate)
-    public void SetTreeType(int type)
+    public void Init()
     {
-        GameObject pick = (type == 3) ? treeTypes[Random.Range(0, treeTypes.Length)] : treeTypes[type];
+        //Add to GameCtrl List
+        GameCtrl.AddTreeToList(this);
+
+        //Pick tree type
+        GameObject pick = treeTypes[Random.Range(0, treeTypes.Length)];
         GameObject treeInstance = Instantiate(pick, transform.position, Quaternion.identity, transform);
         treeInstance.transform.SetParent(transform);
 
@@ -39,21 +48,21 @@ public class Tree : MonoBehaviour
         turnDirection = (Random.value < 0.5) ? -1 : 1;
 
         //Start growth
-        StartCoroutine(TreeCoroutine(5));
-
-        //A3 - track tree count
-        PlayerCtrl.IncreaseTreeCount();
+        treeCollider = GetComponent<CapsuleCollider>();
+        StartCoroutine(TreeGrowth(5));
     }
 
-    
 
-
-    //This is a Coroutine. Coroutines are asynchronous processes - use whenever we need a timer or do something based on time
-    IEnumerator TreeCoroutine(float time)
+    //Tree Growth Coroutine
+    IEnumerator TreeGrowth(float time)
     {
+        growing = true;
         float startSize = 0;
         float endSize = 1;
         float elapsedTime = 0;
+
+        //Activate collider
+        treeCollider.enabled = true;
 
         while (elapsedTime < time)
         {   
@@ -72,5 +81,28 @@ public class Tree : MonoBehaviour
 
         //Activate perch targets once growth complete
         Util.FindInactiveChild(gameObject, "perchParent").SetActive(true);
+        growing = false;
+        if (dead) StartDeath();
     }
+
+    ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////
+    public void StartDeath()
+    {
+        if (!growing) StartCoroutine(TreeDeath());
+        dead = true;
+    }
+
+    IEnumerator TreeDeath()
+    {
+        yield return new WaitForSeconds(2);
+
+        //tmp
+        treeTransform.localScale *= .5f;
+
+        yield return new WaitForSeconds(2);
+
+        Destroy(gameObject);
+    }
+
+
 }

@@ -20,13 +20,6 @@ public class Seed : MonoBehaviour
     bool floating = true;
     bool thrown = false;
     bool done = false;
-    int type;
-
-    //Define what kind of tree it will spawn (TODO before project integration: change to enum)
-    public void SetType(int newType)
-    {
-        type = newType;
-    }
 
     void Start()
     {
@@ -65,8 +58,8 @@ public class Seed : MonoBehaviour
             done = true;
             GameObject treeInstance = Instantiate(treePrefab, new Vector3(transform.position.x, transform.position.y-.2f, transform.position.z),
                    Quaternion.identity);
-            treeInstance.GetComponent<Tree>().SetTreeType(type);
-            GameObject.Find("_livingBirdsController").GetComponent<lb_BirdController>().TreeSpawn();
+            treeInstance.GetComponent<Tree>().Init();
+            GameCtrl.gameCtrl.gameObject.GetComponent<lb_BirdController>().TreeSpawn();
             Destroy(gameObject);
         }
     }
@@ -79,8 +72,8 @@ public class Seed : MonoBehaviour
             done = true;
             GameObject treeInstance = Instantiate(treePrefab, new Vector3(transform.position.x, transform.position.y - .2f, transform.position.z),
                    Quaternion.identity);
-            treeInstance.GetComponent<Tree>().SetTreeType(type);
-            GameObject.Find("_livingBirdsController").GetComponent<lb_BirdController>().TreeSpawn();
+            treeInstance.GetComponent<Tree>().Init();
+            GameCtrl.gameCtrl.gameObject.GetComponent<lb_BirdController>().TreeSpawn();
             Destroy(gameObject);
         }
     }

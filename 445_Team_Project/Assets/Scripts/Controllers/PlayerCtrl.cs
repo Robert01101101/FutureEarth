@@ -13,6 +13,8 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
+    public bool skipIntro;
+
     //OVR
     OVRPlayerController ovrPlayerController;
 
@@ -41,7 +43,7 @@ public class PlayerCtrl : MonoBehaviour
         else { Destroy(this); }
 
         ovrPlayerController = GetComponent<OVRPlayerController>();
-        StartCoroutine(ClippyPrimingSequence());
+        if (!skipIntro) { StartCoroutine(ClippyPrimingSequence()); } else { SkipIntro(); }
     }
 
     public void PlayAudioBtn()
@@ -86,5 +88,19 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (clippyAudio[clip - 1].isPlaying) clippyAudio[clip-1].Stop();
         clippyAudio[clip].Play();
+    }
+
+    private void SkipIntro()
+    {
+        GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
+        clippyIntroDone = true;
+        StartCoroutine(SkipIntroEnableClippy());
+    }
+
+    IEnumerator SkipIntroEnableClippy ()
+    {
+        yield return new WaitForSeconds(5);
+        Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR").GetComponent<Clippy>().enableClippy();
+        Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL").GetComponent<Clippy>().enableClippy();
     }
 }

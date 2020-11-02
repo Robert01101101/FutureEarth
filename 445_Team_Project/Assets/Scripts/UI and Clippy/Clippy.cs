@@ -15,7 +15,7 @@ using TMPro;
 public class Clippy : MonoBehaviour
 {
     ///////////////// Public fields
-    public GameObject clippyUiPrefab, canvas, seedPrefab;
+    public GameObject clippyUiPrefab, canvas, seedPrefab, waterFilterPrefab;
     public Button button;
     public VRbtn vrBtn;
     public TextMeshProUGUI btnLabel;
@@ -130,21 +130,11 @@ public class Clippy : MonoBehaviour
         otherSideClippy = (gameObject.name == "clippyL") ? Util.FindInactiveChild(avatar, "clippyR").GetComponent<Clippy>() : Util.FindInactiveChild(avatar, "clippyL").GetComponent<Clippy>();
     }
 
-    //////////////////////////////////////////////////////////////////////////// A3
+    
     public void IntroDone()
     {
         //skip intro in the future
         PlayerCtrl.clippyIntroDone = true;
-    }
-
-    public void SpawnSeed(int type)
-    {
-        GameObject seed = Instantiate(seedPrefab, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z),
-                   Quaternion.identity);
-        seed.GetComponent<Seed>().SetType(type);
-
-        //position 55cm in front of player gaze
-        seed.transform.position += player.transform.forward * .4f;
     }
 
     public void enableClippy()
@@ -155,5 +145,22 @@ public class Clippy : MonoBehaviour
         SwapLabels();
     }
 
-    
+    //////////////////////////////////////////////////////////////////////////// Spawn
+    public void SpawnSeed()
+    {
+        GameObject seed = Instantiate(seedPrefab, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z),
+                   Quaternion.identity);
+
+        //position 40cm in front of player gaze
+        seed.transform.position += player.transform.forward * .4f;
+    }
+
+    public void SpawnWaterFiler()
+    {
+        GameObject waterFilter = Instantiate(waterFilterPrefab, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z),
+                   Quaternion.identity);
+
+        //position 40cm in front of player gaze
+        waterFilter.transform.position += player.transform.forward * .4f;
+    }
 }

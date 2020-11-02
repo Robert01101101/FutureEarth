@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hatch : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //Open hatch when player pushes against it, by triggering an animation.
     public AudioSource ambient;
     AudioSource audio;
     Animator animator;

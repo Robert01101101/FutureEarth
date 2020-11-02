@@ -36,9 +36,9 @@ public class ClippyUI : MonoBehaviour
     private bool waitingForGrip = false;
     public GameObject intro, intro2, intro3, intro4, spawnSeed, intro2Picture, intro2Btn;
     public Button intro3Btn, intro4Btn;
-    public TextMeshProUGUI treeCountLabel;
+    //public TextMeshProUGUI treeCountLabel;
 
-    ////////////////////////////////////////////////////////////////////////// Follow Player
+    ////////////////////////////////////////////////////////////////////////// Init
     private void Start()
     {
         target = GameObject.Find("CenterEyeAnchor").transform;
@@ -49,6 +49,14 @@ public class ClippyUI : MonoBehaviour
         if (!PlayerCtrl.clippyIntroDone) PlayerCtrl.playerCtrl.PlayClippyAudio(6);
     }
 
+    public void Init(int treeCount)
+    {
+        intro.SetActive(false);
+        spawnSeed.SetActive(true);
+        //treeCountLabel.text = "Trees spawned: " + treeCount;
+    }
+
+    ////////////////////////////////////////////////////////////////////////// Follow Player
     void Update()
     {
         // Smoothly move the camera towards that target position
@@ -89,9 +97,35 @@ public class ClippyUI : MonoBehaviour
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////////// Coroutines
     IEnumerator ThrowAway()
     {
         rigidbody.isKinematic = false;
+        yield return new WaitForSeconds(1);
+        BtnClose();
+    }
+
+    IEnumerator UnlockBtn(int btnNum)
+    {
+        yield return new WaitForSeconds(2);
+        switch (btnNum)
+        {
+            case 3:
+                intro3Btn.interactable = true;
+                break;
+            case 4:
+                intro4Btn.interactable = true;
+                break;
+            default:
+                intro3Btn.interactable = true;
+                intro4Btn.interactable = true;
+                break;
+        }
+    }
+
+    IEnumerator DelayedAutoClose()
+    {
         yield return new WaitForSeconds(1);
         BtnClose();
     }
@@ -102,27 +136,16 @@ public class ClippyUI : MonoBehaviour
         clippy = input;
     }
 
-    //Call by setting onClick() on the Buttons (make sure you are editing the ClippyUI prefab)
+
     ////////////////////////////////////////////////////////////////////////// UI METHODS /////////////////////////////////////////////////////////
-    public void BtnTest()
-    {
-        count--;
-        //label.text = "2020 is over in: " + count;
-    }
-
-    public void BtnTest2()
-    {
-        count++;
-        //label.text = "2020 is over in: " + count;
-    }
-
+    //Call by setting onClick() on the Buttons (make sure you are editing the ClippyUI prefab)
     public void BtnClose()
     {
         clippy.ClippyClosed();
         Destroy(gameObject);
     }
 
-    ////////////////////////////////////////////////////////////////////////// A3 Specific /////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////// INTRO /////////////////////////////////////////////////////////
     public void BtnA3Intro()
     {
         intro.SetActive(false);
@@ -154,60 +177,16 @@ public class ClippyUI : MonoBehaviour
         clippy.IntroDone();
     }
 
-    IEnumerator UnlockBtn(int btnNum)
+    ////////////////////////////////////////////////////////////////////////// TAB - SPAWN /////////////////////////////////////////////////////////
+    public void BtnSpawnSeed()
     {
-        yield return new WaitForSeconds(2);
-        switch (btnNum)
-        {
-            case 3:
-                intro3Btn.interactable = true;
-                break;
-            case 4:
-                intro4Btn.interactable = true;
-                break;
-            default:
-                intro3Btn.interactable = true;
-                intro4Btn.interactable = true;
-                break;
-        }
-    }
-
-    //Seed btns
-
-    public void BtnA3Seed1()
-    {
-        clippy.SpawnSeed(0);
+        clippy.SpawnSeed();
         StartCoroutine(DelayedAutoClose());
     }
 
-    public void BtnA3Seed2()
+    public void BtnSpawnWaterFilter()
     {
-        clippy.SpawnSeed(1);
-        StartCoroutine(DelayedAutoClose());
+        clippy.SpawnWaterFiler();
     }
 
-    public void BtnA3Seed3()
-    {
-        clippy.SpawnSeed(2);
-        StartCoroutine(DelayedAutoClose());
-    }
-
-    public void BtnA3SeedRandom()
-    {
-        clippy.SpawnSeed(3);
-        StartCoroutine(DelayedAutoClose());
-    }
-
-    IEnumerator DelayedAutoClose()
-    {
-        yield return new WaitForSeconds(1);
-        BtnClose();
-    }
-
-    public void Init(int treeCount)
-    {
-        intro.SetActive(false);
-        spawnSeed.SetActive(true);
-        treeCountLabel.text = "Trees spawned: " + treeCount;
-    }
 }
