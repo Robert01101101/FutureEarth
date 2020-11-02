@@ -133,6 +133,36 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1166892247165538125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3925019718078247442}
+  m_Layer: 0
+  m_Name: GunBarrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3925019718078247442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166892247165538125}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -1.22, y: -1.38, z: -0.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 500498210760364899}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
 --- !u!1 &5984120325206210258
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6316719711839775558}
   - component: {fileID: 5319970812028299540}
+  - component: {fileID: 332207515685137418}
   m_Layer: 0
   m_Name: Clippy
   m_TagString: Untagged
@@ -456,6 +487,23 @@ MonoBehaviour:
   button: {fileID: 5984120325206210256}
   vrBtn: {fileID: 5984120325206210253}
   btnLabel: {fileID: 6592394676789169970}
+--- !u!114 &332207515685137418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6693105170221019644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e181014f0744ab42a8f175f7459635c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 3223320817493713904, guid: 05e58574673fa13469e862446a0b08df,
+    type: 3}
+  barrelLocation: {fileID: 3925019718078247442}
+  shotPower: 500
+  shootingButton: 8192
 --- !u!1001 &106002842051572872
 PrefabInstance:
   m_ObjectHideFlags: 0
