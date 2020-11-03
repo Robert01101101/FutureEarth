@@ -38,6 +38,12 @@ public class lb_BirdController : MonoBehaviour {
         idealNumberOfBirds = (int) Util.mapVal(trees, 0, 10, 2, 10);
     }
 
+    public void RemovePerchTarget(GameObject removeTarget)
+    {
+        birdPerchTargets.Remove(removeTarget);
+    }
+    // custom code end
+
 	public void AllFlee(){
 		if(!pause){
 			for(int i=0;i<myBirds.Length;i++){

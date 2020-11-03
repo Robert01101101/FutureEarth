@@ -11,6 +11,9 @@ public class GameCtrl : MonoBehaviour
     private static List<Tree> treeList = new List<Tree>();
     private static List<WaterFilter> waterFilterList = new List<WaterFilter>();
 
+    //Other
+    [HideInInspector] public static lb_BirdController birdCtrl;
+
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
     //from: https://riptutorial.com/unity3d/example/14518/a-simple-singleton-monobehaviour-in-unity-csharp
@@ -22,6 +25,11 @@ public class GameCtrl : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
         else { Destroy(this); }
+    }
+
+    private void Start()
+    {
+        birdCtrl = GetComponent<lb_BirdController>();
     }
 
     private void Update()

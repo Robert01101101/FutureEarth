@@ -18,6 +18,7 @@ public class Tree : MonoBehaviour
 {
     //Public fields
     public GameObject[] treeTypes;
+    public Material dryLeavesMaterial;
 
     //Private fields
     Transform treeTransform;
@@ -26,9 +27,9 @@ public class Tree : MonoBehaviour
 
     bool dead = false;
     bool growing = false;
-    
 
-    //A3 (was originally in start with always random pick)
+
+    ///////////////////////////////////////////////////////// TREE GROWTH /////////////////////////////////////////
     //Init method: define tree type, start tree growth (grow in size, rotate)
     public void Init()
     {
@@ -49,26 +50,74 @@ public class Tree : MonoBehaviour
 
         //Start growth
         treeCollider = GetComponent<CapsuleCollider>();
-        StartCoroutine(TreeGrowth(5));
+        StartCoroutine(TreeLerpSize(5, false));
     }
 
 
-    //Tree Growth Coroutine
-    IEnumerator TreeGrowth(float time)
+    ///////////////////////////////////////////////////////// TREE DEATH /////////////////////////////////////////
+    public void StartDeath()
     {
-        growing = true;
-        float startSize = 0;
-        float endSize = 1;
+        if (!growing) StartCoroutine(TreeDeath());
+        dead = true;
+
+        
+    }
+
+    IEnumerator TreeDeath()
+    {
+        //TODO: make birds fly off
+
+        //remove bird perch targets from birdController
+        SphereCollider[] perchTargets;
+        perchTargets = GetComponentsInChildren<SphereCollider>();
+        foreach (SphereCollider collider in perchTargets)
+        {
+            collider.gameObject.tag = "Untagged";
+            GameCtrl.birdCtrl.RemovePerchTarget(collider.gameObject);
+        }
+
+        //Leaves turn yellow
+        yield return new WaitForSeconds(2);
+
+        //If this line causes a bug, it's because a Tree has perchTargets as the first child. To fix, swap it with the tree model in the hierarchy.
+        GameObject leaves = gameObject.transform.GetChild(0).GetChild(0).Find("leaves").gameObject;
+        leaves.GetComponent<MeshRenderer>().material = dryLeavesMaterial;
+
+        //Leaves disappear
+        yield return new WaitForSeconds(5);
+        leaves.SetActive(false);
+
+        //Base disappears
+        yield return new WaitForSeconds(10);
+        StartCoroutine(TreeLerpSize(20, true));
+    }
+
+    ///////////////////////////////////////////////////////// Util /////////////////////////////////////////
+    IEnumerator TreeLerpSize (float time, bool death)
+    {
+        ////////////// Prime
+        float startSize, endSize;
         float elapsedTime = 0;
+        if (death)
+        {
+            startSize = 1;
+            endSize = 0;
+        } else
+        {
+            growing = true;
+            startSize = 0;
+            endSize = 1;
 
-        //Activate collider
-        treeCollider.enabled = true;
+            //Activate collider
+            treeCollider.enabled = true;
+        }
 
+        ////////////// Handle growth / shrinking
         while (elapsedTime < time)
-        {   
+        {
             //Lerp is a function to interpolate (transition) between two values over time. Transition between start and end size (0 to  1)
             float curSize = Mathf.SmoothStep(startSize, endSize, (elapsedTime / time));
-            //Rotations work different. It's best to define the rate of rotation, the sine function is handz for this (between 0, 1, back to 0)
+            //Rotations work different. It's best to define the rate of rotation, the sine function is handy for this (between 0, 1, back to 0)
             float curRotationRate = Mathf.Sin(Util.mapVal((elapsedTime / time), 0, 1, 0, Mathf.PI));
 
             //Apply size & rotation
@@ -79,30 +128,16 @@ public class Tree : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        //Activate perch targets once growth complete
-        Util.FindInactiveChild(gameObject, "perchParent").SetActive(true);
-        growing = false;
-        if (dead) StartDeath();
+        ////////////// Complete
+        if (death)
+        {
+            Destroy(gameObject);
+        } else
+        {
+            //Activate perch targets once growth complete
+            Util.FindInactiveChild(gameObject, "perchParent").SetActive(true);
+            growing = false;
+            if (dead) StartDeath();
+        }
     }
-
-    ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////
-    public void StartDeath()
-    {
-        if (!growing) StartCoroutine(TreeDeath());
-        dead = true;
-    }
-
-    IEnumerator TreeDeath()
-    {
-        yield return new WaitForSeconds(2);
-
-        //tmp
-        treeTransform.localScale *= .5f;
-
-        yield return new WaitForSeconds(2);
-
-        Destroy(gameObject);
-    }
-
-
 }
