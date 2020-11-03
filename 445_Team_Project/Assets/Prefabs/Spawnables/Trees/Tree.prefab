@@ -64,6 +64,8 @@ MonoBehaviour:
   - {fileID: 4657092513691450263, guid: beb7cca472c382a4e8aed4d8999d436d, type: 3}
   - {fileID: 1730729345246717202, guid: 72ac6ae759600c048a483d7ba13a623a, type: 3}
   dryLeavesMaterial: {fileID: 2100000, guid: 894583d895d58b444b8e8b67169bd2a4, type: 2}
+  grassPrefab: {fileID: 7566378363462614613, guid: be2f0fd8e5fd3d043991601b852c8fa4,
+    type: 3}
 --- !u!82 &2280343153096541074
 AudioSource:
   m_ObjectHideFlags: 0

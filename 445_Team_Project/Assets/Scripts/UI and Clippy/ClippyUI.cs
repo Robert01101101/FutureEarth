@@ -85,7 +85,7 @@ public class ClippyUI : MonoBehaviour
             }
         }
 
-        //TMP for A3
+        //intro: wait for player to grip screen before proceeding
         if (waitingForGrip)
         {
             if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0 || OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0)
@@ -187,6 +187,7 @@ public class ClippyUI : MonoBehaviour
     public void BtnSpawnWaterFilter()
     {
         clippy.SpawnWaterFiler();
+        StartCoroutine(DelayedAutoClose());
     }
 
 }

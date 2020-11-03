@@ -19,11 +19,13 @@ public class Tree : MonoBehaviour
     //Public fields
     public GameObject[] treeTypes;
     public Material dryLeavesMaterial;
+    public GameObject grassPrefab;
 
     //Private fields
     Transform treeTransform;
     int turnDirection;
     CapsuleCollider treeCollider;
+    private GameObject grassParentInstance;
 
     bool dead = false;
     bool growing = false;
@@ -65,8 +67,10 @@ public class Tree : MonoBehaviour
 
     IEnumerator TreeDeath()
     {
-        //TODO: make birds fly off
+        //Remove grass
+        Destroy(grassParentInstance);
 
+        //TODO: make birds fly off
         //remove bird perch targets from birdController
         SphereCollider[] perchTargets;
         perchTargets = GetComponentsInChildren<SphereCollider>();
@@ -95,7 +99,7 @@ public class Tree : MonoBehaviour
     ///////////////////////////////////////////////////////// Util /////////////////////////////////////////
     IEnumerator TreeLerpSize (float time, bool death)
     {
-        ////////////// Prime
+        ////////////// before main loop
         float startSize, endSize;
         float elapsedTime = 0;
         if (death)
@@ -112,7 +116,7 @@ public class Tree : MonoBehaviour
             treeCollider.enabled = true;
         }
 
-        ////////////// Handle growth / shrinking
+        ////////////// Main loop: Handle growth / shrinking
         while (elapsedTime < time)
         {
             //Lerp is a function to interpolate (transition) between two values over time. Transition between start and end size (0 to  1)
@@ -128,7 +132,7 @@ public class Tree : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        ////////////// Complete
+        ////////////// after main loop
         if (death)
         {
             Destroy(gameObject);
@@ -137,7 +141,55 @@ public class Tree : MonoBehaviour
             //Activate perch targets once growth complete
             Util.FindInactiveChild(gameObject, "perchParent").SetActive(true);
             growing = false;
-            if (dead) StartDeath();
+            if (dead)
+            {
+                StartDeath();
+            } else
+            {
+                ///////Add Grass
+                int grassCount = (int)Random.Range(20f, 25f);
+                //Add Grass Parent
+                GameObject grassParent = new GameObject("grassParent");
+                grassParentInstance = Instantiate(grassParent, transform.position, Quaternion.identity);
+                grassParentInstance.transform.parent = gameObject.transform;
+                grassParentInstance.transform.localScale = new Vector3(1, 0, 1);
+                //Add Grass Children
+                for (int i = 0; i < grassCount; i++)
+                {
+                    //Define Position & spawn
+                    Vector2 randomOffset = Random.insideUnitCircle * 1.5f;
+                    Vector3 spawnPosition = new Vector3(transform.position.x + randomOffset.x,
+                                                        transform.position.y - .2f,
+                                                        transform.position.z + randomOffset.y);
+                    GameObject grassInstance = Instantiate(grassPrefab, spawnPosition, Quaternion.identity);
+                    //Add random rotation
+                    grassInstance.transform.Rotate(0f, Random.Range(0f, 360f), 0f);
+                    grassInstance.transform.parent = grassParentInstance.transform;
+                    grassInstance.transform.localScale = Vector3.one;
+                }
+                //Make gras grow vertically
+                StartCoroutine(GrassGrowth());
+            }
+        }
+    }
+
+    IEnumerator GrassGrowth()
+    {
+        float time = 3;
+        float startSize = 0;
+        float endSize = 1;
+        float elapsedTime = 0;
+
+        while (elapsedTime < time)
+        {
+            //Lerp is a function to interpolate (transition) between two values over time. Transition between start and end size (0 to  1)
+            float curSize = Mathf.SmoothStep(startSize, endSize, (elapsedTime / time));
+
+            //Apply size & rotation
+            grassParentInstance.transform.localScale = new Vector3(1, curSize, 1);
+
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
     }
 }
