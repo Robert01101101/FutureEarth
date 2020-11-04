@@ -64,7 +64,7 @@ public class Clippy : MonoBehaviour
 
                 uiInstanceClippyUI = uiInstance.GetComponent<ClippyUI>();
                 uiInstanceClippyUI.SetClippy(this);
-                if (PlayerCtrl.clippyIntroDone) uiInstanceClippyUI.Init(PlayerCtrl.treeCount);
+                if (PlayerCtrl.clippyIntroDone) uiInstanceClippyUI.SkipIntro();
 
                 Debug.Log("opened Clippy");
                 SwapLabels();
@@ -160,7 +160,7 @@ public class Clippy : MonoBehaviour
         GameObject waterFilter = Instantiate(waterFilterPrefab, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z),
                    Quaternion.identity);
 
-        //position 40cm in front of player gaze
-        waterFilter.transform.position += player.transform.forward * .4f;
+        //position 80cm in front of player gaze * 30cm down
+        waterFilter.transform.position += player.transform.forward * .8f + Vector3.down * .3f;
     }
 }

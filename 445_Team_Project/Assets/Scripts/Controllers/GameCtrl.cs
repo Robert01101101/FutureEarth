@@ -10,6 +10,7 @@ public class GameCtrl : MonoBehaviour
     //Tree health management
     private static List<Tree> treeList = new List<Tree>();
     private static List<WaterFilter> waterFilterList = new List<WaterFilter>();
+    private static List<PartType> sparePartList = new List<PartType>();
 
     //Other
     [HideInInspector] public static lb_BirdController birdCtrl;
@@ -61,4 +62,19 @@ public class GameCtrl : MonoBehaviour
 
     public static void AddWaterFilterToList (WaterFilter waterFilter) { waterFilterList.Add(waterFilter); }
 
+    public static void AddPartToList(PartType part) { sparePartList.Add(part); }
+
+    public static int GetTreeCount() { return treeList.Count; }
+
+    public static int GetWaterFilterCount() { return waterFilterList.Count; }
+
+    public static int GetPartCount() { return sparePartList.Count; }
+
+    public static void RemovePartsFromList()
+    {
+        for (int i=0; i<5; i++)
+        {
+            sparePartList.RemoveAt(sparePartList.Count - 1);
+        }
+    }
 }

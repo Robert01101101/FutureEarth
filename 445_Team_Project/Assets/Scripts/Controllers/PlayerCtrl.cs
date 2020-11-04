@@ -24,10 +24,7 @@ public class PlayerCtrl : MonoBehaviour
 
     //Singleton player instance
     public static PlayerCtrl playerCtrl;
-
-    //A3 - spawn UI on correct screen (skip intro once done)
     [HideInInspector] public static bool clippyIntroDone = false;
-    [HideInInspector] public static int treeCount = 0;
     [HideInInspector] public static bool clippyOpen = false;
 
 
@@ -50,11 +47,6 @@ public class PlayerCtrl : MonoBehaviour
     {
         buttonSound.Stop();
         buttonSound.Play();
-    }
-
-    public static void IncreaseTreeCount()
-    {
-        treeCount++;
     }
 
     IEnumerator ClippyPrimingSequence()

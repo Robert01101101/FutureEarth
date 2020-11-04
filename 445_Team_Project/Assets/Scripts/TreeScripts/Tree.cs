@@ -186,7 +186,7 @@ public class Tree : MonoBehaviour
             float curSize = Mathf.SmoothStep(startSize, endSize, (elapsedTime / time));
 
             //Apply size & rotation
-            grassParentInstance.transform.localScale = new Vector3(1, curSize, 1);
+            //grassParentInstance.transform.localScale = new Vector3(1, curSize, 1);
 
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
