@@ -8,6 +8,7 @@ TagManager:
   - lb_groundTarget
   - lb_perchTarget
   - player_forwardposition
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,9 +20,9 @@ TagManager:
   - 
   - Ground
   - Player
-  - 
-  - 
-  - 
+  - Enemy
+  - EnemyProjectile
+  - PlayerProjectile
   - 
   - 
   - 
