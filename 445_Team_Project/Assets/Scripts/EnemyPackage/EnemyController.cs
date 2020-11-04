@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
@@ -22,6 +19,8 @@ public class EnemyController : MonoBehaviour
     {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
+        //Ignore the collisions between its bullets and itself
+        Physics.IgnoreLayerCollision(10, 11);
     }
 
     // Update is called once per frame
@@ -43,12 +42,14 @@ public class EnemyController : MonoBehaviour
                     //Attack player
                     GameObject bullet = Instantiate(projectile, barrelLocation.position, barrelLocation.rotation);
                     bullet.GetComponent<Rigidbody>().AddForce(transform.forward * shotPower);
+                    Destroy(bullet, 2);
                     //End Attack
                     alreadyAttacked = true;
                     Invoke(nameof(ResetAttack), timeBetweenAttacks);
                 }
             }
         }
+
     }
 
     private void ResetAttack()
@@ -56,6 +57,7 @@ public class EnemyController : MonoBehaviour
         alreadyAttacked = false;
     }
 
+    //Change to face target
     void FaceTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;
@@ -63,7 +65,7 @@ public class EnemyController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-
+    //Visualize lookRadius in Scene 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = UnityEngine.Color.red;

@@ -501,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e181014f0744ab42a8f175f7459635c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 3223320817493713904, guid: 05e58574673fa13469e862446a0b08df,
+  bulletPrefab: {fileID: 4327994437186176964, guid: 421fcb2aed297e54da5e39ec78041738,
     type: 3}
   barrelLocation: {fileID: 3925019718078247442}
   shotPower: 500
