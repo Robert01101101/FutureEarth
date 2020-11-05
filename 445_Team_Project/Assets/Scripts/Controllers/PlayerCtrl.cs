@@ -1,19 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sigtrap.VrTunnellingPro;
 
 /// <summary>
 /// Responsible for all logic related to the player. 
 /// Uses singleton pattern - all properties & methods are accessibly through: PlayerCtrl.playerCtrl or for static methods: PlayerCtrl.IncreaseTreeCount() (example)
-/// Current responsibilities:
-/// - Track game variables such as amount of trees grown (move to GameCtrl)
+/// 
+/// Features:
 /// - Control non-spatial audio
 /// - Control clippy priming sequence (adio & things like enabling interactions at the right time)
+/// - TODO: Player Vision (hit VFX, vignette)
 /// </summary> 
 
 public class PlayerCtrl : MonoBehaviour
 {
     public bool skipIntro;
+    public Tunnelling vignette;
+    public TunnellingPreset vignettePresetDefault, vignettePresetRed;
 
     //OVR
     OVRPlayerController ovrPlayerController;
@@ -41,6 +45,22 @@ public class PlayerCtrl : MonoBehaviour
 
         ovrPlayerController = GetComponent<OVRPlayerController>();
         if (!skipIntro) { StartCoroutine(ClippyPrimingSequence()); } else { SkipIntro(); }
+    }
+
+    ///////////////////TODO: LINK UP WITH HIT
+    public void PlayerHitVignette()
+    {
+        StartCoroutine(PlayerHitVignetteRoutine());
+    }
+
+    IEnumerator PlayerHitVignetteRoutine()
+    {
+        vignette._debugForceOn = true;
+        vignette._debugForceValue = .8f;
+        vignette.ApplyPreset(vignettePresetRed);
+        yield return new WaitForSeconds(1f);
+        vignette._debugForceOn = false;
+        vignette.ApplyPreset(vignettePresetDefault);
     }
 
     public void PlayAudioBtn()

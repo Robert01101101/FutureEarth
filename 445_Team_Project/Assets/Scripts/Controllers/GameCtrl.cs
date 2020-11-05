@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for all logic related to the game. 
+/// Uses singleton pattern - all properties & methods are accessibly through: GameCtrl.gameCtrl or for static methods: GameCtrl.GetPartCount() (example)
+/// 
+/// Features:
+/// - Track game variables such as amount of trees grown (move to GameCtrl)
+/// - Control non-spatial audio
+/// - Control clippy priming sequence (adio & things like enabling interactions at the right time)
+/// </summary> 
+
 public class GameCtrl : MonoBehaviour
 {
     //Singleton gameCtrl instance
