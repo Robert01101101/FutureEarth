@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     public GameObject projectile;
     public Transform barrelLocation;
     public float shotPower = 500f;
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         //Ignore the collisions between its bullets and itself
         Physics.IgnoreLayerCollision(10, 11);
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -31,7 +33,7 @@ public class EnemyController : MonoBehaviour
         // if player within range, follow player
         if (distance <= lookRadius)
         {
-            agent.SetDestination(target.position);
+            ChasePlayer();
 
             //if player is within stopping distance, rotate to look at player + attack
             if (distance <= agent.stoppingDistance)
@@ -39,10 +41,7 @@ public class EnemyController : MonoBehaviour
                 FaceTarget();
                 if (!alreadyAttacked)
                 {
-                    //Attack player
-                    GameObject bullet = Instantiate(projectile, barrelLocation.position, barrelLocation.rotation);
-                    bullet.GetComponent<Rigidbody>().AddForce(transform.forward * shotPower);
-                    Destroy(bullet, 2);
+                    Attack();
                     //End Attack
                     alreadyAttacked = true;
                     Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -50,6 +49,20 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+    }
+
+    void ChasePlayer()
+    {
+        anim.SetBool("chasePlayer", true);
+        agent.SetDestination(target.position);
+    }
+
+    void Attack()
+    {
+        anim.SetBool("attackPlayer", true);
+        //Attack player
+        GameObject bullet = Instantiate(projectile, barrelLocation.position, barrelLocation.rotation);
+        bullet.GetComponent<Rigidbody>().AddForce(transform.forward * shotPower);
     }
 
     private void ResetAttack()

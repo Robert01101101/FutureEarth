@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6194247900273679507}
   - component: {fileID: 3737283319230980097}
   - component: {fileID: -5131709792975338444}
+  - component: {fileID: -5459564541965707349}
   m_Layer: 11
   m_Name: SampleBullet
   m_TagString: Untagged
@@ -110,3 +111,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &-5459564541965707349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3223320817493713904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8f9d950c1f9e14486be4028080247b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
