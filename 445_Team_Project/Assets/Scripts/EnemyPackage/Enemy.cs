@@ -5,6 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float health = 50f;
+    public GameObject spawnPart;
+    int index;
+
+    void Start()
+    {
+
+    }
+
     public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
@@ -18,5 +26,6 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+        Instantiate(spawnPart, transform.position, transform.rotation);
     }
 }

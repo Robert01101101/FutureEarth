@@ -18,6 +18,6 @@ public class PlayerProjectile : MonoBehaviour
             // do damage here, for example:
             collision.gameObject.GetComponent<Enemy>().TakeDamage(bulletDamage);
             Debug.Log(collision);
-        }
+        } 
     }
 }
