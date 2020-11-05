@@ -638,6 +638,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  spawnPart: {fileID: 7663320683034728850, guid: bcd5d5da547888344b2b354c534f6412,
+    type: 3}
 --- !u!1 &2082910718
 GameObject:
   m_ObjectHideFlags: 0
