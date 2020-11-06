@@ -55,14 +55,43 @@ public class PlayerCtrl : MonoBehaviour
 
     IEnumerator PlayerHitVignetteRoutine()
     {
+        //Fade In
         vignette._debugForceOn = true;
-        vignette._debugForceValue = .8f;
+        vignette._debugForceValue = 0f;
         vignette.ApplyPreset(vignettePresetRed);
+        float time = .5f;
+        float startVal = 0;
+        float endVal = 0.8f;
+        float elapsedTime = 0;
+        while (elapsedTime < time)
+        {
+            float curVal = Mathf.SmoothStep(startVal, endVal, (elapsedTime / time));
+            vignette._debugForceValue = curVal;
+
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        //Keep for 1 sec
         yield return new WaitForSeconds(1f);
+
+        //Fade Out
+        startVal = 0.8f;
+        endVal = 0f;
+        elapsedTime = 0;
+        while (elapsedTime < time)
+        {
+            float curVal = Mathf.SmoothStep(startVal, endVal, (elapsedTime / time));
+            vignette._debugForceValue = curVal;
+
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
         vignette._debugForceOn = false;
         vignette.ApplyPreset(vignettePresetDefault);
     }
 
+    /////////////////////////////////////////////////////////////////////// CLIPPY AUDIO / NARRATIVE HARDCODING ///////////////////////
     public void PlayAudioBtn()
     {
         buttonSound.Stop();
@@ -71,14 +100,15 @@ public class PlayerCtrl : MonoBehaviour
 
     IEnumerator ClippyPrimingSequence()
     {
+        //Approaching earth
         ovrPlayerController.SetHaltUpdateMovement(true);
-        yield return new WaitForSeconds(4);
-        clippyAudio[0].Play();
-        yield return new WaitForSeconds(7);
-        clippyAudio[1].Play();
-        yield return new WaitForSeconds(8);
-        clippyAudio[2].Play();
         yield return new WaitForSeconds(3);
+        clippyAudio[0].Play();
+        yield return new WaitForSeconds(8);
+        clippyAudio[1].Play();
+        yield return new WaitForSeconds(8.5f);
+        clippyAudio[2].Play();
+        yield return new WaitForSeconds(3.5f);
 
         //has landed
         clippyAudio[3].Play();
@@ -86,13 +116,19 @@ public class PlayerCtrl : MonoBehaviour
         GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
         yield return new WaitForSeconds(26);
 
-        //use clippy
+        
+        //first step
+        clippyAudio[4].Play();
+        yield return new WaitForSeconds(11);
+        //explore
+        clippyAudio[5].Play();
+        yield return new WaitForSeconds(15);
+
+        //beginBrief
+        clippyAudio[6].Play();
         Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR").GetComponent<Clippy>().enableClippy();
         Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL").GetComponent<Clippy>().enableClippy();
-        clippyAudio[4].Play();
 
-        yield return new WaitForSeconds(9);
-        clippyAudio[5].Play();
     }
 
     
@@ -114,5 +150,6 @@ public class PlayerCtrl : MonoBehaviour
         yield return new WaitForSeconds(5);
         Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR").GetComponent<Clippy>().enableClippy();
         Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL").GetComponent<Clippy>().enableClippy();
+        Debug.Log("Skipped Intro, Clippy enabled");
     }
 }

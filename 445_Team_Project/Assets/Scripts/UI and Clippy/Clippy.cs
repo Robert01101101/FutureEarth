@@ -16,7 +16,6 @@ public class Clippy : MonoBehaviour
 {
     ///////////////// Public fields
     public GameObject clippyUiPrefab, canvas, seedPrefab, waterFilterPrefab;
-    public Button button;
     public VRbtn vrBtn;
     public TextMeshProUGUI btnLabel;
 
@@ -43,13 +42,16 @@ public class Clippy : MonoBehaviour
 
         //start disabled
         temporaryLock = true;
-        button.interactable = false;
+        vrBtn.SetInteractable(false);
     }
+
+    
 
     public void BtnClippyOpen()
     {
         if (!temporaryLock)
         {
+            if (otherSideClippy == null) FindOtherClippy();
             StartCoroutine(TemporaryLock());
             if (!PlayerCtrl.clippyOpen)
             {
@@ -81,12 +83,12 @@ public class Clippy : MonoBehaviour
     IEnumerator TemporaryLock()
     {
         temporaryLock = true;
-        button.interactable = false;
-        otherSideClippy.button.interactable = false;
+        vrBtn.SetInteractable(false);
+        otherSideClippy.vrBtn.SetInteractable(false);
         yield return new WaitForSeconds(.5f);
         temporaryLock = false;
-        button.interactable = true;
-        otherSideClippy.button.interactable = true;
+        vrBtn.SetInteractable(true);
+        otherSideClippy.vrBtn.SetInteractable(true);
     }
 
     public void ClippyClosed()
@@ -108,19 +110,17 @@ public class Clippy : MonoBehaviour
         if (PlayerCtrl.clippyOpen)
         {
             btnLabel.text = "CLOSE";
-            vrBtn.SetColor(VRbtn.NORMALCOLOR, new Color32(0xFF, 0xC9, 0xC9, 0xff));
-            vrBtn.SetColor(VRbtn.PRESSEDCOLOR, new Color32(0xFF, 0xFF, 0xFF, 0xff));
+            vrBtn.SetAltCol(true);
 
             otherSideClippy.btnLabel.text = "CLOSE";
-            otherSideClippy.vrBtn.SetColor(VRbtn.NORMALCOLOR, new Color32(0xFF, 0xC9, 0xC9, 0xff));
-            otherSideClippy.vrBtn.SetColor(VRbtn.PRESSEDCOLOR, new Color32(0xFF, 0xFF, 0xFF, 0xff));
+            otherSideClippy.vrBtn.SetAltCol(true);
         } else
         {
             btnLabel.text = "CLIPPY";
-            vrBtn.ResetColors();
+            vrBtn.SetAltCol(false);
 
             otherSideClippy.btnLabel.text = "CLIPPY";
-            otherSideClippy.vrBtn.ResetColors();
+            otherSideClippy.vrBtn.SetAltCol(false);
         }
     }
 
@@ -140,9 +140,9 @@ public class Clippy : MonoBehaviour
     public void enableClippy()
     {
         temporaryLock = false;
-        button.interactable = true;
+        vrBtn.SetInteractable(true);
         //update color
-        SwapLabels();
+        //SwapLabels();
     }
 
     //////////////////////////////////////////////////////////////////////////// Spawn

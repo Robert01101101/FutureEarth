@@ -2002,11 +2002,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4904559945803403814, guid: 91dc3d63483b0414cb4801179b8876a2,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4904559947339267849, guid: 91dc3d63483b0414cb4801179b8876a2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2067,37 +2062,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: OVRPlayerControllerCustom
       objectReference: {fileID: 0}
-    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
-        type: 3}
-      propertyPath: vignettePresetDefault
-      value: 
-      objectReference: {fileID: 11400000, guid: c66160a130fb6834084a149625330eba,
-        type: 2}
-    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
-        type: 3}
-      propertyPath: vignettePresetRed
-      value: 
-      objectReference: {fileID: 11400000, guid: e537633a5cf7eb743addd2dc09134e6a,
-        type: 2}
-    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
-        type: 3}
-      propertyPath: vignette
-      value: 
-      objectReference: {fileID: 1167567049}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91dc3d63483b0414cb4801179b8876a2, type: 3}
---- !u!114 &1167567049 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1167567049, guid: 91dc3d63483b0414cb4801179b8876a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1167567047}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ac20df6282234e419ee9915e0fd1676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1169786024
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3213,6 +3179,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6336844003420137215, guid: a20bddb3744ac61418f69532eee499c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a20bddb3744ac61418f69532eee499c5, type: 3}

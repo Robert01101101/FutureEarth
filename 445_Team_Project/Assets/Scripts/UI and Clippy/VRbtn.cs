@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(Button))]
-[RequireComponent(typeof(RawImage))]
 [RequireComponent(typeof(Rigidbody))]
 
 /// <summary>
@@ -21,25 +20,28 @@ using UnityEngine.UI;
 public class VRbtn : MonoBehaviour
 {
     Button thisButton;
-    Color defaultCol, pressedCol;
+    public Color defaultCol, pressedCol, disabledCol, altCol;
     RawImage image;
     BoxCollider collider;
     RectTransform rectTransform;
     Rigidbody rigidbody;
     private bool pressed = false;
+    private bool altColOn = false;
 
-    private void Start()
+    private void Awake()
     {
         thisButton = GetComponent<Button>();
-        image = GetComponent<RawImage>();
+        for (int i=0; i<transform.childCount; i++)
+        {
+            Transform curChild = transform.GetChild(i);
+            if (curChild.gameObject.name == "Front") image = curChild.gameObject.GetComponent<RawImage>();
+        }
         collider = GetComponent<BoxCollider>();
         rectTransform = GetComponent<RectTransform>();
         rigidbody = GetComponent<Rigidbody>();
+
         rigidbody.useGravity = false;
         rigidbody.isKinematic = true;
-
-        defaultCol = thisButton.colors.normalColor;
-        pressedCol = thisButton.colors.pressedColor;
 
         //Ensure collider has correct size
         float rw = rectTransform.rect.width;
@@ -57,7 +59,7 @@ public class VRbtn : MonoBehaviour
                 pressed = true;
                 Debug.Log("VRbtn -> pressed");
                 thisButton.onClick.Invoke();
-                image.color = thisButton.colors.pressedColor;
+                image.color = pressedCol;
                 PlayerCtrl playerCtrl = GameObject.Find("OVRPlayerControllerCustom").GetComponent<PlayerCtrl>();
                 playerCtrl.PlayAudioBtn();
             }
@@ -69,45 +71,31 @@ public class VRbtn : MonoBehaviour
     {
         if (other.gameObject.name == "hands:b_r_index_ignore" || other.gameObject.name == "hands:b_l_index_ignore")
         {
-            pressed = false;
-            Debug.Log("VRbtn -> released");
-            image.color = thisButton.colors.normalColor;
+            if (thisButton.interactable)
+            {
+                pressed = false;
+                Debug.Log("VRbtn -> released");
+                image.color = altColOn ? altCol : defaultCol;
+            }
         }
     }
 
     ////////////////////////////////////////////////////////////////////////// Public Interface /////////////////////////////////////////////////////////
-    public static int NORMALCOLOR = 0;
-    public static int PRESSEDCOLOR = 1;
-    public void SetColor(int type, Color col)
+    public void SetInteractable(bool newState)
     {
-        if (type == NORMALCOLOR)
+        thisButton.interactable = newState;
+        if (newState)
         {
-            ColorBlock newColors = thisButton.colors;
-            newColors.normalColor = col;
-            thisButton.colors = newColors;
-
+            image.color = defaultCol;
         } else
         {
-            ColorBlock newColors = thisButton.colors;
-            newColors.pressedColor = col;
-            thisButton.colors = newColors;
+            image.color = disabledCol;
         }
-
-        //update color
-        image.color = pressed ? thisButton.colors.pressedColor : thisButton.colors.normalColor;
     }
 
-    public void ResetColors()
+    public void SetAltCol(bool usingAlt)
     {
-        ColorBlock newColors = thisButton.colors;
-        newColors.normalColor = defaultCol;
-        newColors.pressedColor = pressedCol;
-        thisButton.colors = newColors;
-
-        //update color
-        image.color = pressed ? thisButton.colors.pressedColor : thisButton.colors.normalColor;
+        image.color = usingAlt ? altCol : defaultCol;
+        altColOn = usingAlt;
     }
-
-
-
 }

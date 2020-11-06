@@ -34,8 +34,8 @@ public class ClippyUI : MonoBehaviour
 
     ///////////////// A3 specific (sequence intro screens & spawn seeds)
     private bool waitingForGrip = false;
-    public GameObject intro, intro2, intro3, intro4, mainPanel, intro2Picture, intro2Btn, tabMission, tabStats, tabBuild;
-    public Button intro3Btn, intro4Btn, waterFilterBtn;
+    public GameObject intro, intro2, intro3, intro4, introPanel, mainPanel, intro2Picture, tabMission, tabStats, tabBuild;
+    public VRbtn intro2Btn, intro3Btn, intro4Btn, waterFilterBtn, tabMissionBtn, tabStatsBtn, tabBuildBtn;
     public TextMeshProUGUI statsValues;
 
     ////////////////////////////////////////////////////////////////////////// Init
@@ -46,12 +46,12 @@ public class ClippyUI : MonoBehaviour
         oVRGrabbable = GetComponent<OVRGrabbable>();
         rigidbody = GetComponent<Rigidbody>();
 
-        if (!PlayerCtrl.clippyIntroDone) PlayerCtrl.playerCtrl.PlayClippyAudio(6);
+        if (!PlayerCtrl.clippyIntroDone) PlayerCtrl.playerCtrl.PlayClippyAudio(7);
     }
 
     public void SkipIntro()
     {
-        intro.SetActive(false);
+        introPanel.SetActive(false);
         mainPanel.SetActive(true);
     }
 
@@ -91,7 +91,8 @@ public class ClippyUI : MonoBehaviour
             {
                 waitingForGrip = false;
                 intro2Picture.SetActive(false);
-                intro2Btn.SetActive(true);
+                intro2Btn.gameObject.SetActive(true);
+                intro2Btn.SetInteractable(true);
             }
         }
     }
@@ -111,14 +112,14 @@ public class ClippyUI : MonoBehaviour
         switch (btnNum)
         {
             case 3:
-                intro3Btn.interactable = true;
+                intro3Btn.SetInteractable(true);
                 break;
             case 4:
-                intro4Btn.interactable = true;
+                intro4Btn.SetInteractable(true);
                 break;
             default:
-                intro3Btn.interactable = true;
-                intro4Btn.interactable = true;
+                intro3Btn.SetInteractable(true);
+                intro4Btn.SetInteractable(true);
                 break;
         }
     }
@@ -149,6 +150,9 @@ public class ClippyUI : MonoBehaviour
         tabMission.SetActive(true);
         tabStats.SetActive(false);
         tabBuild.SetActive(false);
+        tabMissionBtn.SetAltCol(false);
+        tabStatsBtn.SetAltCol(true);
+        tabBuildBtn.SetAltCol(true);
     }
 
     public void BtnTabStats()
@@ -156,9 +160,12 @@ public class ClippyUI : MonoBehaviour
         tabMission.SetActive(false);
         tabStats.SetActive(true);
         tabBuild.SetActive(false);
+        tabMissionBtn.SetAltCol(true);
+        tabStatsBtn.SetAltCol(false);
+        tabBuildBtn.SetAltCol(true);
 
-        statsValues.text = GameCtrl.GetPartCount() + "\n<size=50%>(enough for " + (int) (GameCtrl.GetPartCount()/5) + " water filters)</size>\n\n" + 
-            GameCtrl.GetWaterFilterCount() + "\n<size=50%>(enough for " + GameCtrl.GetWaterFilterCount()*10 + " trees)</size>\n\n" + 
+        statsValues.text = GameCtrl.GetPartCount() + "\n<size=50%>(enough for " + (int) (GameCtrl.GetPartCount()/5) + " water filters)\n </size>\n" + 
+            GameCtrl.GetWaterFilterCount() + "\n<size=50%>(enough for " + GameCtrl.GetWaterFilterCount()*10 + " trees)\n </size>\n" + 
             GameCtrl.GetTreeCount() + "\n<size=50%>(plant 100)</size>";
     }
 
@@ -167,45 +174,50 @@ public class ClippyUI : MonoBehaviour
         tabMission.SetActive(false);
         tabStats.SetActive(false);
         tabBuild.SetActive(true);
+        tabMissionBtn.SetAltCol(true);
+        tabStatsBtn.SetAltCol(true);
+        tabBuildBtn.SetAltCol(false);
         if (GameCtrl.GetPartCount() >= 5)
         {
-            waterFilterBtn.interactable = true;
+            waterFilterBtn.SetInteractable(true);
         } else
         {
-            waterFilterBtn.interactable = false;
+            waterFilterBtn.SetInteractable(false);
         }
     }
 
     ////////////////////////////////////////////////////////////////////////// INTRO /////////////////////////////////////////////////////////
-    public void BtnA3Intro()
+    public void BtnIntro()
     {
         intro.SetActive(false);
         intro2.SetActive(true);
         waitingForGrip = true;
-        PlayerCtrl.playerCtrl.PlayClippyAudio(7);
+        PlayerCtrl.playerCtrl.PlayClippyAudio(8);
     }
 
-    public void BtnA3Intro2()
+    public void BtnIntro2()
     {
         intro2.SetActive(false);
         intro3.SetActive(true);
         StartCoroutine(UnlockBtn(3));
-        PlayerCtrl.playerCtrl.PlayClippyAudio(8);
+        PlayerCtrl.playerCtrl.PlayClippyAudio(9);
     }
    
-    public void BtnA3Intro3()
+    public void BtnIntro3()
     {
         intro3.SetActive(false);
         intro4.SetActive(true);
         StartCoroutine(UnlockBtn(4));
-        PlayerCtrl.playerCtrl.PlayClippyAudio(9);
+        PlayerCtrl.playerCtrl.PlayClippyAudio(10);
     }  
 
-    public void BtnA3Intro4()
+    public void BtnIntro4()
     {
         intro4.SetActive(false);
+        introPanel.SetActive(false);
         mainPanel.SetActive(true);
         clippy.IntroDone();
+        BtnTabBuild();
     }
 
     ////////////////////////////////////////////////////////////////////////// TAB - SPAWN /////////////////////////////////////////////////////////
@@ -222,11 +234,11 @@ public class ClippyUI : MonoBehaviour
         GameCtrl.RemovePartsFromList();
         if (GameCtrl.GetPartCount() >= 5)
         {
-            waterFilterBtn.interactable = true;
+            waterFilterBtn.SetInteractable(true);
         }
         else
         {
-            waterFilterBtn.interactable = false;
+            waterFilterBtn.SetInteractable(false);
         }
     }
 
