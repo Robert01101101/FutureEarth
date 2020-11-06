@@ -16,14 +16,17 @@ public class GameCtrl : MonoBehaviour
 {
     //Singleton gameCtrl instance
     public static GameCtrl gameCtrl;
+    
 
     //Tree health management
     private static List<Tree> treeList = new List<Tree>();
     private static List<WaterFilter> waterFilterList = new List<WaterFilter>();
     private static List<PartType> sparePartList = new List<PartType>();
+    private bool firstTreeDeath = true;
 
     //Other
     [HideInInspector] public static lb_BirdController birdCtrl;
+    [HideInInspector] public static SpawnEnemy spawnEnemy;
 
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
@@ -41,6 +44,7 @@ public class GameCtrl : MonoBehaviour
     private void Start()
     {
         birdCtrl = GetComponent<lb_BirdController>();
+        spawnEnemy = GetComponent<SpawnEnemy>();
     }
 
     private void Update()
@@ -63,14 +67,29 @@ public class GameCtrl : MonoBehaviour
                 Tree curTree = treeList[count - 1 - i];
                 curTree.StartDeath();
                 treeList.Remove(curTree);
+
+                if (firstTreeDeath)
+                {
+                    firstTreeDeath = false;
+                    StartCoroutine(FirstTreeDeath());
+                }
             }
         }
+    }
+
+    IEnumerator FirstTreeDeath()
+    {
+        yield return new WaitForSeconds(9);
+        PlayerCtrl.playerCtrl.PlayClippyAudio(11);
     }
 
     ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////
     public static void AddTreeToList(Tree tree) { treeList.Add(tree);  }
 
-    public static void AddWaterFilterToList (WaterFilter waterFilter) { waterFilterList.Add(waterFilter); }
+    public static void AddWaterFilterToList (WaterFilter waterFilter) { 
+        waterFilterList.Add(waterFilter);
+        if (waterFilterList.Count == 1) PlayerCtrl.playerCtrl.PlayClippyAudio(16);
+    }
 
     public static void AddPartToList(PartType part) { sparePartList.Add(part); }
 

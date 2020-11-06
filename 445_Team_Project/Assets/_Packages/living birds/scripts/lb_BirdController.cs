@@ -35,7 +35,9 @@ public class lb_BirdController : MonoBehaviour {
     public void TreeSpawn()
     {
         trees++;
-        idealNumberOfBirds = (int) Util.mapVal(trees, 0, 10, 2, 10);
+        idealNumberOfBirds = (int) Util.mapVal(trees, 10, 100, 0, 50);
+        if (idealNumberOfBirds < 0) idealNumberOfBirds = 0;
+        if (idealNumberOfBirds > 50) idealNumberOfBirds = 50;
     }
 
     public void RemovePerchTarget(GameObject removeTarget)

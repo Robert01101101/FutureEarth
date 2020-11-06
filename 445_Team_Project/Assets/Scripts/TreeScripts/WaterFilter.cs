@@ -71,7 +71,7 @@ public class WaterFilter : MonoBehaviour
         // Does the ray intersect any objects on the ground layer
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
-            Debug.DrawRay(transform.position + Vector3.up, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
+            //Debug.DrawRay(transform.position + Vector3.up, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
             Debug.Log("Did Hit");
 
             //Place at hit
@@ -82,7 +82,7 @@ public class WaterFilter : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(transform.position + Vector3.up, transform.TransformDirection(Vector3.down) * 1000, Color.white);
+            //Debug.DrawRay(transform.position + Vector3.up, transform.TransformDirection(Vector3.down) * 1000, Color.white);
             Debug.Log("Did not Hit");
         }
     }

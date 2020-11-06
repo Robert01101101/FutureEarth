@@ -14,15 +14,17 @@ public class EnemyController : MonoBehaviour
     public Transform barrelLocation;
     public float shotPower = 500f;
     Animator anim;
+    private AudioSource enemyShotSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = PlayerManager.instance.player.transform;
+        target = PlayerCtrl.playerCtrl.transform;
         agent = GetComponent<NavMeshAgent>();
         //Ignore the collisions between its bullets and itself
         Physics.IgnoreLayerCollision(10, 11);
         anim = GetComponent<Animator>();
+        enemyShotSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -60,6 +62,8 @@ public class EnemyController : MonoBehaviour
     void Attack()
     {
         anim.SetBool("attackPlayer", true);
+        enemyShotSound.Stop();
+        enemyShotSound.Play();
         //Attack player
         GameObject bullet = Instantiate(projectile, barrelLocation.position, barrelLocation.rotation);
         bullet.GetComponent<Rigidbody>().AddForce(transform.forward * shotPower);

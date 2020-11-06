@@ -25,7 +25,8 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        GameCtrl.spawnEnemy.RemoveEnemy();
         Instantiate(spawnPart, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

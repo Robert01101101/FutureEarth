@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Sigtrap.VrTunnellingPro;
 
 namespace Sigtrap.VrTunnellingPro {
 	/// <summary>
@@ -14,5 +15,11 @@ namespace Sigtrap.VrTunnellingPro {
 		void OnRenderImage(RenderTexture src, RenderTexture dest){
 			Draw(src, dest);
 		}
+
+        public void SetForceMode(bool enabled, float val)
+        {
+            _debugForceOn = enabled;
+            _debugForceValue = val;
+        }
 	}
 }

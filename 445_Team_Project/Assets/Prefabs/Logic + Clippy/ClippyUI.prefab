@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032ef59ad7a31f044a7945592abb0acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCol: {r: 1, g: 1, b: 1, a: 0}
+  defaultCol: {r: 1, g: 1, b: 1, a: 1}
   pressedCol: {r: 0, g: 0.8, b: 0.08235294, a: 1}
   disabledCol: {r: 1, g: 1, b: 1, a: 0.5019608}
   altCol: {r: 0, g: 0, b: 0, a: 0}
@@ -280,7 +280,7 @@ BoxCollider:
   m_GameObject: {fileID: 172359554229518995}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.8, z: 0.06}
   m_Center: {x: 0, y: 0, z: 0.03}
@@ -856,7 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032ef59ad7a31f044a7945592abb0acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCol: {r: 1, g: 1, b: 1, a: 0}
+  defaultCol: {r: 1, g: 1, b: 1, a: 1}
   pressedCol: {r: 0, g: 0.8, b: 0.08235294, a: 1}
   disabledCol: {r: 1, g: 1, b: 1, a: 0.5019608}
   altCol: {r: 0, g: 0, b: 0, a: 0}
@@ -1391,7 +1391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &103866951750745364
 RectTransform:
   m_ObjectHideFlags: 0

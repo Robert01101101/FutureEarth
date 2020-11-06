@@ -66,7 +66,6 @@ public class Clippy : MonoBehaviour
 
                 uiInstanceClippyUI = uiInstance.GetComponent<ClippyUI>();
                 uiInstanceClippyUI.SetClippy(this);
-                if (PlayerCtrl.clippyIntroDone) uiInstanceClippyUI.SkipIntro();
 
                 Debug.Log("opened Clippy");
                 SwapLabels();

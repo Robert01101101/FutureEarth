@@ -87,7 +87,8 @@ public class VRbtn : MonoBehaviour
         if (newState)
         {
             image.color = defaultCol;
-        } else
+        }
+        else
         {
             image.color = disabledCol;
         }
@@ -97,5 +98,19 @@ public class VRbtn : MonoBehaviour
     {
         image.color = usingAlt ? altCol : defaultCol;
         altColOn = usingAlt;
+    }
+
+
+    //prevent click if finger is inside button on start
+    private void OnEnable()
+    {
+        StartCoroutine(TmpLock());
+    }
+
+    IEnumerator TmpLock()
+    {
+        collider.enabled = false;
+        yield return new WaitForSeconds(.5f);
+        collider.enabled = true;
     }
 }

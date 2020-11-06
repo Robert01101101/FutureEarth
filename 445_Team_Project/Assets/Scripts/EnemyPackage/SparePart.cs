@@ -9,14 +9,10 @@ public enum PartType
 
 public class SparePart : MonoBehaviour
 {
-    Rigidbody rb;
     bool inRange = false;
+    bool pickup = false;
     [HideInInspector] public PartType thisPartType = PartType.defaultType;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -31,20 +27,46 @@ public class SparePart : MonoBehaviour
     {
         if (inRange)
         {
-            Vector3 offset = PlayerCtrl.playerCtrl.transform.position - transform.position;
+            pickup = true;
+            StartCoroutine(Pickup());
+        }
+    }
 
-            //Move towards player
-            if (rb.velocity.magnitude < 6f)
-            {
-                rb.AddForce(offset.normalized * 4, ForceMode.Acceleration);
-            }
-            //Player pickup when close enough (40cm)
-            if (offset.magnitude < .4f)
-            {
-                Debug.Log("Picked up part: " + thisPartType);
-                GameCtrl.AddPartToList(thisPartType);
-                Destroy(gameObject);
-            }
+    IEnumerator Pickup()
+    {
+        float time = 3;
+        float elapsedTime = 0;
+
+        while (elapsedTime < time)
+        {
+            
+            float curSpeed = Mathf.SmoothStep(0,.1f, (elapsedTime / time));
+            transform.position = Vector3.MoveTowards(transform.position, PlayerCtrl.playerCtrl.transform.position, curSpeed);
+
+            if ((transform.position - PlayerCtrl.playerCtrl.transform.position).magnitude < .5f) elapsedTime = time;
+
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        while ((transform.position - PlayerCtrl.playerCtrl.transform.position).magnitude > .5f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, PlayerCtrl.playerCtrl.transform.position, .3f);
+        }
+
+        EndOfPickup();
+    }
+
+    private bool pickedUp = false;
+    private void EndOfPickup()
+    {
+        if (!pickedUp)
+        {
+            pickedUp = true;
+            Debug.Log("Picked up part: " + thisPartType);
+            GameCtrl.AddPartToList(thisPartType);
+            PlayerCtrl.playerCtrl.PlayPickupSound();
+            Destroy(gameObject);
         }
     }
 

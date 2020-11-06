@@ -46,13 +46,25 @@ public class ClippyUI : MonoBehaviour
         oVRGrabbable = GetComponent<OVRGrabbable>();
         rigidbody = GetComponent<Rigidbody>();
 
-        if (!PlayerCtrl.clippyIntroDone) PlayerCtrl.playerCtrl.PlayClippyAudio(7);
-    }
+        if (!PlayerCtrl.clippyIntroDone)
+        {
+            PlayerCtrl.playerCtrl.PlayClippyAudio(7);
+            introPanel.SetActive(true);
+            mainPanel.SetActive(false);
 
-    public void SkipIntro()
-    {
-        introPanel.SetActive(false);
-        mainPanel.SetActive(true);
+            intro.SetActive(true);
+            intro2.SetActive(false);
+            intro3.SetActive(false);
+            intro4.SetActive(false);
+        } else
+        {
+            introPanel.SetActive(false);
+            mainPanel.SetActive(true);
+
+            tabMission.SetActive(true);
+            tabStats.SetActive(false);
+            tabBuild.SetActive(false);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////// Follow Player
@@ -177,10 +189,17 @@ public class ClippyUI : MonoBehaviour
         tabMissionBtn.SetAltCol(true);
         tabStatsBtn.SetAltCol(true);
         tabBuildBtn.SetAltCol(false);
+        StartCoroutine(WaterFilterBtnDelay());
+    }
+
+    IEnumerator WaterFilterBtnDelay()
+    {
+        yield return new WaitForEndOfFrame();
         if (GameCtrl.GetPartCount() >= 5)
         {
             waterFilterBtn.SetInteractable(true);
-        } else
+        }
+        else
         {
             waterFilterBtn.SetInteractable(false);
         }

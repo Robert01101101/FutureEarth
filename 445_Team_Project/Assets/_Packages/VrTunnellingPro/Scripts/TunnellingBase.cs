@@ -385,14 +385,14 @@ namespace Sigtrap.VrTunnellingPro {
 		#endregion
 
 		#region Debug
-		#if UNITY_EDITOR
+		//#if UNITY_EDITOR
 		#pragma warning disable 0414
 		[HideInInspector] public bool _debugForceOn = false;
         [HideInInspector] public float _debugForceValue = 0;
 		bool _debugMotionCalculations = false;
 		float _debugAv, _debugLa, _debugLv;
 		#pragma warning restore 0414
-		#endif
+		//#endif
 		#endregion
 		#endregion
 		#endregion

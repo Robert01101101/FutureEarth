@@ -1,33 +1,98 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    public GameObject enemy;
-    public int xPos;
-    public int zPos;
-    public int enemyCount;
+    public GameObject enemyPrefab;
+    public Transform spawnCenter1, spawnCenter2;
+    public int minEnemies;
     public int maxEnemies;
+    private int enemyCount = 0;
+    private bool spawnRoutineRunning = true;
 
-    // Start is called before the first frame update
-    void Start()
+    public void SpawnEnemies()
     {
-        StartCoroutine(EnemyDrop());
+        for (int i = 0; i < maxEnemies; i++)
+        {
+            EnemyDrop();
+        }
+        spawnRoutineRunning = false;
     }
 
-    IEnumerator EnemyDrop()
+    private void Update()
     {
-        while (enemyCount < maxEnemies)
+        if (!spawnRoutineRunning)
         {
-            //Define range of x values on the map where enemies can spawn from
-            xPos = Random.Range(-172, -188);
-            //Define range of z values on the map where enemies can spawn from
-            zPos = Random.Range(656, 611);
-            Instantiate(enemy, new Vector3(xPos, 247, zPos), Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
-            enemyCount += 1;
+            if (enemyCount < maxEnemies)
+            {
+                //Debug.Log("Spawn New Enemy");
+                if (enemyCount < minEnemies)
+                {
+                    //Add enemies quickly
+                    StartCoroutine(AddEnemy(1, 3));
+                }
+                else
+                {
+                    //Add enemies slowly
+                    StartCoroutine(AddEnemy(5, 20));
+                }
+            }
         }
+       // Debug.Log(enemyCount);
+    }
+
+    IEnumerator AddEnemy(int minDelay, int maxDelay)
+    {
+        spawnRoutineRunning = true;
+        int delay = Random.Range(minDelay, maxDelay);
+        yield return new WaitForSeconds(delay);
+        EnemyDrop();
+        spawnRoutineRunning = false;
+    }
+
+    private void EnemyDrop()
+    {
+        //ensure not spawning right next to player
+        bool closeToPlayer = true;
+        Vector3 alignedSpawnPosition = Vector3.zero;
+
+        while (closeToPlayer)
+        {
+            //coinflip
+            Vector3 spawnCenter = (Random.value < .5f) ? spawnCenter1.position : spawnCenter2.position;
+
+            //Determine random location based on the spawn center
+            Vector2 offset = Random.insideUnitCircle * 15f;
+            Vector3 spawnPosition = new Vector3(spawnCenter.x + offset.x, spawnCenter.y, spawnCenter.z + offset.y);
+            alignedSpawnPosition = spawnPosition;
+
+            //determine correct y position using raycast to ground
+            // Only detect ground collision
+            int layerMask = 1 << 8;
+
+            RaycastHit hit;
+            if (Physics.Raycast(spawnPosition, Vector3.down, out hit, Mathf.Infinity, layerMask))
+            {
+                //Place at hit
+                alignedSpawnPosition = hit.point;
+            }
+
+            if ((alignedSpawnPosition - PlayerCtrl.playerCtrl.gameObject.transform.position).magnitude > 10) closeToPlayer = false;
+
+            //TODO: Add more checks -> Ensure player not looking in that direction
+        }
+
+        //Spawn Enemy
+        GameObject spawnedEnemy = Instantiate(enemyPrefab, alignedSpawnPosition, Quaternion.identity);
+        //Add random rotation
+        spawnedEnemy.transform.Rotate(0f, Random.Range(0f, 360f), 0f);
+        enemyCount++;
+    }
+
+    /////////////////////////////////////// PUBLIC INTERFACE
+    public void RemoveEnemy()
+    {
+        enemyCount--;
     }
 }

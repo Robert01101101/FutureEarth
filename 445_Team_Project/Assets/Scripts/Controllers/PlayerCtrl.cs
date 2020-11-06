@@ -23,7 +23,7 @@ public class PlayerCtrl : MonoBehaviour
     OVRPlayerController ovrPlayerController;
 
     //Audio
-    public AudioSource buttonSound;
+    public AudioSource buttonSound, laser, heartBeat, pickupSound;
     public AudioSource[] clippyAudio;
 
     //Singleton player instance
@@ -55,18 +55,20 @@ public class PlayerCtrl : MonoBehaviour
 
     IEnumerator PlayerHitVignetteRoutine()
     {
+        heartBeat.Stop();
+        heartBeat.Play();
+
         //Fade In
-        vignette._debugForceOn = true;
-        vignette._debugForceValue = 0f;
+        vignette.SetForceMode(true, 0f);
         vignette.ApplyPreset(vignettePresetRed);
         float time = .5f;
         float startVal = 0;
-        float endVal = 0.8f;
+        float endVal = 0.7f;
         float elapsedTime = 0;
         while (elapsedTime < time)
         {
             float curVal = Mathf.SmoothStep(startVal, endVal, (elapsedTime / time));
-            vignette._debugForceValue = curVal;
+            vignette.SetForceMode(true, curVal);
 
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -76,18 +78,19 @@ public class PlayerCtrl : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         //Fade Out
-        startVal = 0.8f;
+        time = 4f;
+        startVal = 0.7f;
         endVal = 0f;
         elapsedTime = 0;
         while (elapsedTime < time)
         {
             float curVal = Mathf.SmoothStep(startVal, endVal, (elapsedTime / time));
-            vignette._debugForceValue = curVal;
+            vignette.SetForceMode(true, curVal);
 
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        vignette._debugForceOn = false;
+        vignette.SetForceMode(false, 0f);
         vignette.ApplyPreset(vignettePresetDefault);
     }
 
@@ -126,9 +129,12 @@ public class PlayerCtrl : MonoBehaviour
 
         //beginBrief
         clippyAudio[6].Play();
-        Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR").GetComponent<Clippy>().enableClippy();
-        Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL").GetComponent<Clippy>().enableClippy();
-
+        GameObject clippyL = Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR");
+        GameObject clippyR = Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL");
+        clippyL.GetComponent<Clippy>().enableClippy();
+        clippyR.GetComponent<Clippy>().enableClippy();
+        clippyL.GetComponent<Shooting>().EnableGun();
+        clippyR.GetComponent<Shooting>().EnableGun();
     }
 
     
@@ -136,6 +142,23 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (clippyAudio[clip - 1].isPlaying) clippyAudio[clip-1].Stop();
         clippyAudio[clip].Play();
+
+        //approach enemy timer
+        if (clip == 11) StartCoroutine(ApproachEnemyAudio());
+        if (clip == 16) StartCoroutine(MoreTreesAudio());
+    }
+
+    IEnumerator ApproachEnemyAudio()
+    {
+        GameCtrl.spawnEnemy.SpawnEnemies();
+        yield return new WaitForSeconds(30);
+        clippyAudio[12].Play();
+    }
+
+    IEnumerator MoreTreesAudio()
+    {
+        yield return new WaitForSeconds(15);
+        clippyAudio[17].Play();
     }
 
     private void SkipIntro()
@@ -151,5 +174,29 @@ public class PlayerCtrl : MonoBehaviour
         Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR").GetComponent<Clippy>().enableClippy();
         Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL").GetComponent<Clippy>().enableClippy();
         Debug.Log("Skipped Intro, Clippy enabled");
+    }
+
+
+    private int parts = 0;
+    public void PlayPickupSound()
+    {
+        pickupSound.Stop();
+        pickupSound.Play();
+
+        parts++;
+        if (parts == 1)
+        {
+            clippyAudio[13].Play();
+        } else if (parts == 5)
+        {
+            clippyAudio[14].Play();
+            StartCoroutine(PlantTreesAudio());
+        }
+    }
+
+    IEnumerator PlantTreesAudio()
+    {
+        yield return new WaitForSeconds(20);
+        clippyAudio[15].Play();
     }
 }
