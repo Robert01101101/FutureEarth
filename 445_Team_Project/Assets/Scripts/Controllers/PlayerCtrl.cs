@@ -47,7 +47,9 @@ public class PlayerCtrl : MonoBehaviour
         if (!skipIntro) { StartCoroutine(ClippyPrimingSequence()); } else { SkipIntro(); }
     }
 
-    ///////////////////TODO: LINK UP WITH HIT
+    /////////////////////////////////////////////////////////////////////// PLAYER HIT VFX /////////////////////////////////////////////
+    //Turn vision red on hit
+    //TODO: Fix - works in editor but not in build
     public void PlayerHitVignette()
     {
         StartCoroutine(PlayerHitVignetteRoutine());
@@ -94,13 +96,45 @@ public class PlayerCtrl : MonoBehaviour
         vignette.ApplyPreset(vignettePresetDefault);
     }
 
-    /////////////////////////////////////////////////////////////////////// CLIPPY AUDIO / NARRATIVE HARDCODING ///////////////////////
+    /////////////////////////////////////////////////////////////////////// GENERAL AUDIO /////////////////////////////////////////////
+    private int parts = 0;
+    public void PlayPickupSound()
+    {
+        pickupSound.Stop();
+        pickupSound.Play();
+
+        parts++;
+        if (parts == 1)
+        {
+            clippyAudio[13].Play();
+        }
+        else if (parts == 5)
+        {
+            clippyAudio[14].Play();
+            StartCoroutine(PlantTreesAudio());
+        }
+    }
+
     public void PlayAudioBtn()
     {
         buttonSound.Stop();
         buttonSound.Play();
     }
 
+
+
+    /////////////////////////////////////////////////////////////////////// CLIPPY AUDIO / NARRATIVE HARDCODING ///////////////////////
+    public void PlayClippyAudio(int clip)
+    {
+        if (clippyAudio[clip - 1].isPlaying) clippyAudio[clip - 1].Stop();
+        clippyAudio[clip].Play();
+
+        //approach enemy timer
+        if (clip == 11) StartCoroutine(ApproachEnemyAudio());
+        if (clip == 16) StartCoroutine(MoreTreesAudio());
+    } 
+
+    //////////// Clippy Audio narration up until beginning the mission brief
     IEnumerator ClippyPrimingSequence()
     {
         //Approaching earth
@@ -137,15 +171,11 @@ public class PlayerCtrl : MonoBehaviour
         clippyR.GetComponent<Shooting>().EnableGun();
     }
 
-    
-    public void PlayClippyAudio(int clip)
+    /////// Event-based clippy timers
+    IEnumerator PlantTreesAudio()
     {
-        if (clippyAudio[clip - 1].isPlaying) clippyAudio[clip-1].Stop();
-        clippyAudio[clip].Play();
-
-        //approach enemy timer
-        if (clip == 11) StartCoroutine(ApproachEnemyAudio());
-        if (clip == 16) StartCoroutine(MoreTreesAudio());
+        yield return new WaitForSeconds(20);
+        clippyAudio[15].Play();
     }
 
     IEnumerator ApproachEnemyAudio()
@@ -161,13 +191,6 @@ public class PlayerCtrl : MonoBehaviour
         clippyAudio[17].Play();
     }
 
-    private void SkipIntro()
-    {
-        GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
-        clippyIntroDone = true;
-        StartCoroutine(SkipIntroEnableClippy());
-    }
-
     IEnumerator SkipIntroEnableClippy ()
     {
         yield return new WaitForSeconds(5);
@@ -176,27 +199,11 @@ public class PlayerCtrl : MonoBehaviour
         Debug.Log("Skipped Intro, Clippy enabled");
     }
 
-
-    private int parts = 0;
-    public void PlayPickupSound()
+    //////////////////////////////////////////////////////////////////////// OTHER /////////////////////////////////////////////////////
+    private void SkipIntro()
     {
-        pickupSound.Stop();
-        pickupSound.Play();
-
-        parts++;
-        if (parts == 1)
-        {
-            clippyAudio[13].Play();
-        } else if (parts == 5)
-        {
-            clippyAudio[14].Play();
-            StartCoroutine(PlantTreesAudio());
-        }
-    }
-
-    IEnumerator PlantTreesAudio()
-    {
-        yield return new WaitForSeconds(20);
-        clippyAudio[15].Play();
+        GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
+        clippyIntroDone = true;
+        StartCoroutine(SkipIntroEnableClippy());
     }
 }
