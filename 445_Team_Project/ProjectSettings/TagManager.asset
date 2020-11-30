@@ -23,8 +23,8 @@ TagManager:
   - Enemy
   - EnemyProjectile
   - PlayerProjectile
-  - 
-  - 
+  - PostProcessing stage 1
+  - PostProcessing stage 2
   - 
   - 
   - 
