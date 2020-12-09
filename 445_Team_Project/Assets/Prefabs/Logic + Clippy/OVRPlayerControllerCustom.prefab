@@ -932,7 +932,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: abd68a12f1af28145965a27d9774af03, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1440,7 +1440,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b3e244d167502244f877dc0f37f1641d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.45
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4519,6 +4519,7 @@ MonoBehaviour:
   buttonSound: {fileID: 2489673264240306837}
   laser: {fileID: 1670354280}
   heartBeat: {fileID: 1591400662}
+  pickupSound: {fileID: 1171429714}
   clippyAudio:
   - {fileID: 2075257037}
   - {fileID: 88432565}
