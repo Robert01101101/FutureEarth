@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: SkyboxForRealtime
   m_Shader: {fileID: 4800000, guid: a26f6c3a227968248908d2fc42ae06e9, type: 3}
   m_ShaderKeywords: _MAPPING_LATITUDE_LONGITUDE_LAYOUT _SUNDISK_HIGH_QUALITY
@@ -125,9 +126,9 @@ Material:
     - _FirstColor: {r: 1, g: 1, b: 1, a: 1}
     - _GradientDirection: {r: 0, g: 1, b: 0, a: 0}
     - _GroundColor: {r: 0.369, g: 0.349, b: 0.341, a: 1}
-    - _HorizonColor: {r: 0.85294116, g: 0.85294116, b: 0.85294116, a: 0}
+    - _HorizonColor: {r: 0.7115496, g: 0.87336326, b: 0.9717388, a: 0}
     - _SecondColor: {r: 0.5058824, g: 0.5058824, b: 0.5058824, a: 1}
     - _SkyTint: {r: 0.1102941, g: 0.1102941, b: 0.1102941, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
-    - _TopColor: {r: 0.5058824, g: 0.5058824, b: 0.5058824, a: 0}
+    - _TopColor: {r: 0.53344965, g: 0.823275, b: 0.9994259, a: 0}
     - _UpVector: {r: 0, g: 1, b: 0, a: 0}

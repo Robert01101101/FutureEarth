@@ -28,6 +28,11 @@ public class GameCtrl : MonoBehaviour
     [HideInInspector] public static lb_BirdController birdCtrl;
     [HideInInspector] public static SpawnEnemy spawnEnemy;
 
+    public Material skyBox, waterMat;
+    public Color[] startColors, endColors, waterColors;
+    public ParticleSystem dust1, dust2;
+    private bool tmpSky = false;
+
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
     //from: https://riptutorial.com/unity3d/example/14518/a-simple-singleton-monobehaviour-in-unity-csharp
@@ -50,6 +55,7 @@ public class GameCtrl : MonoBehaviour
     private void Update()
     {
         MonitorTreeHealth();
+        UpdateEnvironment();
     }
 
     ///////////////////////////////////////////////////////// TREE HEALTH /////////////////////////////////////////
@@ -81,6 +87,49 @@ public class GameCtrl : MonoBehaviour
     {
         yield return new WaitForSeconds(9);
         PlayerCtrl.playerCtrl.PlayClippyAudio(11);
+    }
+
+    ///////////////////////////////////////////////////////// Environment Change /////////////////////////////////////////
+    private void UpdateEnvironment()
+    {
+        if (!tmpSky)
+        {
+            tmpSky = true;
+            StartCoroutine(SkyLerp());
+        }
+    }
+
+    [System.Obsolete]
+    IEnumerator SkyLerp()
+    {
+        float time = 10;
+        float elapsedTime = 0;
+        int startDust = 600;
+        int endDust = 0;
+
+        yield return new WaitForSeconds(1);
+
+        while (elapsedTime < time)
+        {
+            //Lerp is a function to interpolate (transition) between two values over time. Transition between start and end size (0 to  1)
+            Color horizonCol = Color.Lerp(startColors[1], endColors[1], (elapsedTime / time));
+            //sky
+            skyBox.SetColor("_TopColor", Color.Lerp(startColors[0], endColors[0], (elapsedTime / time)));
+            skyBox.SetColor("_HorizonColor", horizonCol);
+            skyBox.SetColor("_BottomColor", Color.Lerp(startColors[2], endColors[2], (elapsedTime / time)));
+            //fog
+            RenderSettings.fogColor = horizonCol;
+            //dust
+            int dustCount = (int) Mathf.SmoothStep(startDust, endDust, (elapsedTime / time));
+            dust1.maxParticles = dustCount;
+            dust2.maxParticles = dustCount / 12;
+            //water
+            waterMat.SetColor("_Color", Color.Lerp(waterColors[0], waterColors[1], (elapsedTime / time)));
+
+
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////
