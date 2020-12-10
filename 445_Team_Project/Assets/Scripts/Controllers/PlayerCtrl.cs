@@ -194,15 +194,19 @@ public class PlayerCtrl : MonoBehaviour
     IEnumerator SkipIntroEnableClippy ()
     {
         yield return new WaitForSeconds(5);
-        Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR").GetComponent<Clippy>().enableClippy();
-        Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL").GetComponent<Clippy>().enableClippy();
+        GameObject clippyL = Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR");
+        GameObject clippyR = Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL");
+        clippyL.GetComponent<Clippy>().enableClippy();
+        clippyR.GetComponent<Clippy>().enableClippy();
+        clippyL.GetComponent<Shooting>().EnableGun();
+        clippyR.GetComponent<Shooting>().EnableGun();
         Debug.Log("Skipped Intro, Clippy enabled");
     }
 
     //////////////////////////////////////////////////////////////////////// OTHER /////////////////////////////////////////////////////
     private void SkipIntro()
     {
-        GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
+        if (GameObject.Find("Hatch") != null) GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
         clippyIntroDone = true;
         StartCoroutine(SkipIntroEnableClippy());
     }

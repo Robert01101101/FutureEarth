@@ -277,6 +277,11 @@ PrefabInstance:
     - target: {fileID: 5010141890242675563, guid: 91dc3d63483b0414cb4801179b8876a2,
         type: 3}
       propertyPath: CUSTOM_PC_DEBUG
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
+        type: 3}
+      propertyPath: skipIntro
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
