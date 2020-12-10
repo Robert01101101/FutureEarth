@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -152,7 +152,7 @@ MonoBehaviour:
     value: 1
   tint:
     overrideState: 0
-    value: 0
+    value: -1
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -161,52 +161,52 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 5
+    value: 22
   brightness:
     overrideState: 0
     value: 0
   postExposure:
     overrideState: 1
-    value: 1.5
+    value: 1.2
   contrast:
     overrideState: 1
-    value: 1
+    value: -8
   mixerRedOutRedIn:
     overrideState: 1
     value: 100
   mixerRedOutGreenIn:
     overrideState: 1
-    value: 5
+    value: -5
   mixerRedOutBlueIn:
     overrideState: 1
-    value: -10
+    value: 0
   mixerGreenOutRedIn:
-    overrideState: 0
+    overrideState: 1
     value: 0
   mixerGreenOutGreenIn:
-    overrideState: 0
+    overrideState: 1
     value: 100
   mixerGreenOutBlueIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 2
   mixerBlueOutRedIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 10
   mixerBlueOutGreenIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -10
   mixerBlueOutBlueIn:
-    overrideState: 0
+    overrideState: 1
     value: 100
   lift:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: -0.1697793}
   gamma:
     overrideState: 1
-    value: {x: 0.93649566, y: 0.949183, z: 1, w: -0.010487672}
+    value: {x: 0.93649566, y: 0.949183, z: 1, w: -0.2481787}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.94099635, z: 0.99324423, w: -0.020975355}
+    value: {x: 1, y: 0.94099635, z: 0.99324423, w: 0.11484809}
   masterCurve:
     overrideState: 0
     value:

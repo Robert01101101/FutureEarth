@@ -29,11 +29,13 @@ public class GameCtrl : MonoBehaviour
     [HideInInspector] public static lb_BirdController birdCtrl;
     [HideInInspector] public static SpawnEnemy spawnEnemy;
 
+    [Space(10)]
     [Header("Environment Mood")]
     public Material skyBox, waterMat;
     public Color[] startColors, endColors, waterColors;
     public ParticleSystem dust1, dust2;
     public PostProcessVolume ppBefore, ppAfter;
+    public Light sun;
 
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
@@ -99,11 +101,10 @@ public class GameCtrl : MonoBehaviour
 
     IEnumerator SkyLerp()
     {
-        float time = 10;
-        float elapsedTime = 0;
-        
+        yield return new WaitForSeconds(30);
 
-        yield return new WaitForSeconds(5);
+        float time = 60;
+        float elapsedTime = 0;
 
         while (elapsedTime < time)
         {
@@ -117,6 +118,10 @@ public class GameCtrl : MonoBehaviour
     //Sets the mood of the environment (skybox, fog, dust, water). Input a value between 0 (beginning: grim) and 1 (ending: bright).
     int startDust = 600;
     int endDust = 0;
+    int startFogLimit = 300;
+    int endFogLimit = 1250;
+    int startFog = 0;
+    int endFog = 50;
     private void SetEnvironment (float lerp)
     {
         Color horizonCol = Color.Lerp(startColors[1], endColors[1], lerp);
@@ -126,6 +131,8 @@ public class GameCtrl : MonoBehaviour
         skyBox.SetColor("_BottomColor", Color.Lerp(startColors[2], endColors[2], lerp));
         //fog
         RenderSettings.fogColor = horizonCol;
+        RenderSettings.fogEndDistance = Util.mapVal(lerp, 0, 1, startFogLimit, endFogLimit);
+        RenderSettings.fogStartDistance = Util.mapVal(lerp, 0, 1, startFog, endFog);
         //dust
         int dustCount = (int)Mathf.SmoothStep(startDust, endDust, lerp);
         dust1.maxParticles = dustCount;
@@ -133,8 +140,10 @@ public class GameCtrl : MonoBehaviour
         //water
         waterMat.SetColor("_Color", Color.Lerp(waterColors[0], waterColors[1], lerp));
         //Post Processing
-        ppBefore.weight = 1-lerp;
-        ppAfter.weight = lerp;
+        ppBefore.weight = Util.mapVal(lerp, 0, 1, 1, 0);
+        ppAfter.weight = Util.mapVal(lerp, 0, 1, 0, .4f);
+        //sun
+        sun.intensity = Util.mapVal(lerp, 0, 1, 0.5f, 1.1f);
     }
 
     ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////

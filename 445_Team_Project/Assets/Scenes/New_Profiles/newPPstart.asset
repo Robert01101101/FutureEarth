@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -21,7 +21,7 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 0.4
+    value: 0.2
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -48,7 +48,7 @@ MonoBehaviour:
     value: 0.25
   quality:
     overrideState: 0
-    value: 2
+    value: 1
 --- !u!114 &-8781757731274670687
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -149,10 +149,10 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 1
+    value: 50
   tint:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 10
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -161,25 +161,25 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: -5
+    value: -30
   brightness:
     overrideState: 0
     value: 0
   postExposure:
     overrideState: 1
-    value: 0
+    value: -0.5
   contrast:
     overrideState: 1
-    value: -33
+    value: 0
   mixerRedOutRedIn:
     overrideState: 1
-    value: 100
+    value: 102
   mixerRedOutGreenIn:
     overrideState: 1
     value: 5
   mixerRedOutBlueIn:
     overrideState: 1
-    value: -10
+    value: 5
   mixerGreenOutRedIn:
     overrideState: 0
     value: 0
@@ -190,23 +190,23 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   mixerBlueOutRedIn:
-    overrideState: 0
+    overrideState: 1
     value: 0
   mixerBlueOutGreenIn:
-    overrideState: 0
+    overrideState: 1
     value: 0
   mixerBlueOutBlueIn:
-    overrideState: 0
-    value: 100
+    overrideState: 1
+    value: 96
   lift:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: -0.05093373}
   gamma:
     overrideState: 1
-    value: {x: 0.93649566, y: 0.949183, z: 1, w: -0.112355255}
+    value: {x: 0.93649566, y: 0.949183, z: 1, w: -0.3670242}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.94099635, z: 0.99324423, w: -0.020975355}
+    value: {x: 1, y: 0.94099635, z: 0.99324423, w: 0.097870156}
   masterCurve:
     overrideState: 0
     value:
