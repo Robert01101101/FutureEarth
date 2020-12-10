@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 /// <summary>
 /// Responsible for all logic related to the game. 
@@ -28,10 +29,11 @@ public class GameCtrl : MonoBehaviour
     [HideInInspector] public static lb_BirdController birdCtrl;
     [HideInInspector] public static SpawnEnemy spawnEnemy;
 
+    [Header("Environment Mood")]
     public Material skyBox, waterMat;
     public Color[] startColors, endColors, waterColors;
     public ParticleSystem dust1, dust2;
-    private bool tmpSky = false;
+    public PostProcessVolume ppBefore, ppAfter;
 
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
@@ -50,12 +52,12 @@ public class GameCtrl : MonoBehaviour
     {
         birdCtrl = GetComponent<lb_BirdController>();
         spawnEnemy = GetComponent<SpawnEnemy>();
+        ResetEnvironmentMood();
     }
 
     private void Update()
     {
         MonitorTreeHealth();
-        UpdateEnvironment();
     }
 
     ///////////////////////////////////////////////////////// TREE HEALTH /////////////////////////////////////////
@@ -90,46 +92,49 @@ public class GameCtrl : MonoBehaviour
     }
 
     ///////////////////////////////////////////////////////// Environment Change /////////////////////////////////////////
-    private void UpdateEnvironment()
-    {
-        if (!tmpSky)
-        {
-            tmpSky = true;
-            StartCoroutine(SkyLerp());
-        }
+    private void ResetEnvironmentMood() {
+        SetEnvironment(0);
+        StartCoroutine(SkyLerp());
     }
 
-    [System.Obsolete]
     IEnumerator SkyLerp()
     {
         float time = 10;
         float elapsedTime = 0;
-        int startDust = 600;
-        int endDust = 0;
+        
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
 
         while (elapsedTime < time)
         {
-            //Lerp is a function to interpolate (transition) between two values over time. Transition between start and end size (0 to  1)
-            Color horizonCol = Color.Lerp(startColors[1], endColors[1], (elapsedTime / time));
-            //sky
-            skyBox.SetColor("_TopColor", Color.Lerp(startColors[0], endColors[0], (elapsedTime / time)));
-            skyBox.SetColor("_HorizonColor", horizonCol);
-            skyBox.SetColor("_BottomColor", Color.Lerp(startColors[2], endColors[2], (elapsedTime / time)));
-            //fog
-            RenderSettings.fogColor = horizonCol;
-            //dust
-            int dustCount = (int) Mathf.SmoothStep(startDust, endDust, (elapsedTime / time));
-            dust1.maxParticles = dustCount;
-            dust2.maxParticles = dustCount / 12;
-            //water
-            waterMat.SetColor("_Color", Color.Lerp(waterColors[0], waterColors[1], (elapsedTime / time)));
-
+            SetEnvironment(elapsedTime / time);
 
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    //Sets the mood of the environment (skybox, fog, dust, water). Input a value between 0 (beginning: grim) and 1 (ending: bright).
+    int startDust = 600;
+    int endDust = 0;
+    private void SetEnvironment (float lerp)
+    {
+        Color horizonCol = Color.Lerp(startColors[1], endColors[1], lerp);
+        //sky
+        skyBox.SetColor("_TopColor", Color.Lerp(startColors[0], endColors[0], lerp));
+        skyBox.SetColor("_HorizonColor", horizonCol);
+        skyBox.SetColor("_BottomColor", Color.Lerp(startColors[2], endColors[2], lerp));
+        //fog
+        RenderSettings.fogColor = horizonCol;
+        //dust
+        int dustCount = (int)Mathf.SmoothStep(startDust, endDust, lerp);
+        dust1.maxParticles = dustCount;
+        dust2.maxParticles = dustCount / 12;
+        //water
+        waterMat.SetColor("_Color", Color.Lerp(waterColors[0], waterColors[1], lerp));
+        //Post Processing
+        ppBefore.weight = 1-lerp;
+        ppAfter.weight = lerp;
     }
 
     ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////

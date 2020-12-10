@@ -25,8 +25,8 @@ TagManager:
   - PlayerProjectile
   - PostProcessing stage 1
   - PostProcessing stage 2
-  - 
-  - 
+  - PostProcessing stage A
+  - PostProcessing stage B
   - 
   - 
   - 
