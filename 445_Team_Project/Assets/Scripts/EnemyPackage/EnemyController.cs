@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public float lookRadius = 10f;
+    public float lookRadius = 30f;
     Transform target;
     UnityEngine.AI.NavMeshAgent agent;
 
@@ -12,8 +13,8 @@ public class EnemyController : MonoBehaviour
     bool alreadyAttacked;
     public GameObject projectile;
     public Transform barrelLocation;
-    public float shotPower = 500f;
-    Animator anim;
+    public float shotPower;
+    private Animator anim;
     private AudioSource enemyShotSound;
 
     // Start is called before the first frame update
@@ -23,8 +24,8 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         //Ignore the collisions between its bullets and itself
         Physics.IgnoreLayerCollision(10, 11);
-        anim = GetComponent<Animator>();
         enemyShotSound = GetComponent<AudioSource>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -61,17 +62,24 @@ public class EnemyController : MonoBehaviour
 
     void Attack()
     {
+        StartCoroutine(AttackSequence());
+    }
+
+    IEnumerator AttackSequence()
+    {
         anim.SetBool("attackPlayer", true);
+        yield return new WaitForSeconds(.5f);
         enemyShotSound.Stop();
         enemyShotSound.Play();
         //Attack player
         GameObject bullet = Instantiate(projectile, barrelLocation.position, barrelLocation.rotation);
-        bullet.GetComponent<Rigidbody>().AddForce(transform.forward * shotPower);
+        bullet.GetComponent<Rigidbody>().AddForce(transform.forward*shotPower + Vector3.up*shotPower/8, ForceMode.Force);
+        anim.SetBool("attackPlayer", false);
     }
 
     private void ResetAttack()
     {
-        alreadyAttacked = false;
+        alreadyAttacked = false; 
     }
 
     //Change to face target
