@@ -4,14 +4,16 @@ using UnityEngine;
 
 public enum PartType
 {
-    defaultType
+    chip,
+    tube,
+    pump
 }
 
 public class SparePart : MonoBehaviour
 {
     bool inRange = false;
     bool pickup = false;
-    [HideInInspector] public PartType thisPartType = PartType.defaultType;
+    public PartType thisPartType;
 
 
     private void OnTriggerEnter(Collider other)

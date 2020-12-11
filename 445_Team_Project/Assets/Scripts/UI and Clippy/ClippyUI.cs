@@ -34,10 +34,10 @@ public class ClippyUI : MonoBehaviour
 
     /////////////////
     private bool waitingForGrip = false;
-    public GameObject intro, intro2, intro3, intro4, introPanel, mainPanel, intro2Picture, tabMission, tabStats, tabBuild;
-    public VRbtn intro2Btn, intro3Btn, intro4Btn, waterFilterBtn, tabMissionBtn, tabStatsBtn, tabBuildBtn;
+    public GameObject intro, intro2, intro3, intro4, introPanel, mainPanel, intro2Picture, tabMission, tabInventory, tabStats, tabBuild, imgChip, imgPump1, imgPump2, imgTube1, imgTube2, imgTube3;
+    public VRbtn intro2Btn, intro3Btn, intro4Btn, waterFilterBtn, tabMissionBtn, tabInventoryBtn, tabStatsBtn, tabBuildBtn;
 
-    public TextMeshProUGUI statsValues, timeText;
+    public TextMeshProUGUI statsValues, inventoryValues, timeText;
     private string timeString = "Date:\n2720 | 03 | 23\n\nTime:\n";
 
     ////////////////////////////////////////////////////////////////////////// Init
@@ -160,35 +160,67 @@ public class ClippyUI : MonoBehaviour
     public void BtnTabMission()
     {
         tabMission.SetActive(true);
+        tabInventory.SetActive(false);
         tabStats.SetActive(false);
         tabBuild.SetActive(false);
         tabMissionBtn.SetAltCol(false);
+        tabInventoryBtn.SetAltCol(true);
         tabStatsBtn.SetAltCol(true);
         tabBuildBtn.SetAltCol(true);
 
         timeText.text = timeString + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute;
     }
 
+    public void BtnTabInventory()
+    {
+        tabMission.SetActive(false);
+        tabInventory.SetActive(true);
+        tabStats.SetActive(false);
+        tabBuild.SetActive(false);
+        tabMissionBtn.SetAltCol(true);
+        tabInventoryBtn.SetAltCol(false);
+        tabStatsBtn.SetAltCol(true);
+        tabBuildBtn.SetAltCol(true);
+
+        int chips = GameCtrl.GetPartCount(PartType.chip);
+        int pumps = GameCtrl.GetPartCount(PartType.pump);
+        int tubes = GameCtrl.GetPartCount(PartType.tube);
+
+        inventoryValues.text = chips + "\n<size=50%> \n </size>\n" +
+            tubes + "\n<size=50%> \n </size>\n" +
+            tubes;
+
+        imgChip.SetActive(chips >= 1);
+        imgPump1.SetActive(pumps >= 1);
+        imgPump2.SetActive(pumps >= 2);
+        imgTube1.SetActive(tubes >= 1);
+        imgTube2.SetActive(tubes >= 2);
+        imgTube3.SetActive(tubes >= 3);
+    }
+
     public void BtnTabStats()
     {
         tabMission.SetActive(false);
+        tabInventory.SetActive(false);
         tabStats.SetActive(true);
         tabBuild.SetActive(false);
         tabMissionBtn.SetAltCol(true);
+        tabInventoryBtn.SetAltCol(true);
         tabStatsBtn.SetAltCol(false);
         tabBuildBtn.SetAltCol(true);
 
-        statsValues.text = GameCtrl.GetPartCount() + "\n<size=50%>(enough for " + (int) (GameCtrl.GetPartCount()/5) + " water filters)\n </size>\n" + 
-            GameCtrl.GetWaterFilterCount() + "\n<size=50%>(enough for " + GameCtrl.GetWaterFilterCount()*10 + " trees)\n </size>\n" + 
-            GameCtrl.GetTreeCount() + "\n<size=50%>(plant 100)</size>";
+        statsValues.text = GameCtrl.GetWaterFilterCount() + "\n <size=50%> \n </size>\n" + 
+            GameCtrl.GetTreeCount() + "\n<size=50%> </size>";
     }
 
     public void BtnTabBuild()
     {
         tabMission.SetActive(false);
+        tabInventory.SetActive(false);
         tabStats.SetActive(false);
         tabBuild.SetActive(true);
         tabMissionBtn.SetAltCol(true);
+        tabInventoryBtn.SetAltCol(true);
         tabStatsBtn.SetAltCol(true);
         tabBuildBtn.SetAltCol(false);
         StartCoroutine(WaterFilterBtnDelay());
@@ -197,7 +229,7 @@ public class ClippyUI : MonoBehaviour
     IEnumerator WaterFilterBtnDelay()
     {
         yield return new WaitForEndOfFrame();
-        if (GameCtrl.GetPartCount() >= 5)
+        if (CheckIfEnoughParts())
         {
             waterFilterBtn.SetInteractable(true);
         }
@@ -253,7 +285,7 @@ public class ClippyUI : MonoBehaviour
         clippy.SpawnWaterFiler();
         StartCoroutine(DelayedAutoClose());
         GameCtrl.RemovePartsFromList();
-        if (GameCtrl.GetPartCount() >= 5)
+        if (CheckIfEnoughParts())
         {
             waterFilterBtn.SetInteractable(true);
         }
@@ -261,6 +293,11 @@ public class ClippyUI : MonoBehaviour
         {
             waterFilterBtn.SetInteractable(false);
         }
+    }
+
+    private bool CheckIfEnoughParts()
+    {
+        return (GameCtrl.GetPartCount(PartType.chip) >= 1 && GameCtrl.GetPartCount(PartType.pump) >= 2 && GameCtrl.GetPartCount(PartType.tube) >= 3);
     }
 
 }

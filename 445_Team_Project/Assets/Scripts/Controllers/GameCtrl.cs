@@ -163,7 +163,11 @@ public class GameCtrl : MonoBehaviour
 
     public static int GetWaterFilterCount() { return waterFilterList.Count; }
 
-    public static int GetPartCount() { return sparePartList.Count; }
+    public static int GetPartCount(PartType part) {
+        int count = 0;
+        foreach(PartType type in sparePartList){ if (type == part) count++; }
+        return count; 
+    }
 
     public static GameObject GetClosestGarbagePile(Transform botLocation)
     {

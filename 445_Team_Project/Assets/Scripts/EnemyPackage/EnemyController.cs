@@ -93,13 +93,14 @@ public class EnemyController : MonoBehaviour
 
     void Die()
     {
-        GameCtrl.spawnEnemy.RemoveEnemy();
-        int pick = Random.Range(0, partArray.Length+1);
-        Debug.Log(pick);
+        if (!friendly) GameCtrl.spawnEnemy.RemoveEnemy();
+        int pick = Random.Range(0, 8); //77% chance to drop part
 
-        if (pick < partArray.Length)
+        if (pick < 6)
         {
-            //spawn part
+            //spawn part (law of large number dictates that player will get 1 chip, 2 pumps, 3 tubes)
+            if (pick == 1 || pick == 2) { pick = 1; }
+            else if (pick > 2) pick = 2;
             GameObject spawnPart = partArray[pick];
             Instantiate(spawnPart, transform.position, transform.rotation);
             Destroy(gameObject);
@@ -189,16 +190,21 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Garbage")
+        if (friendly)
         {
-            if (!agent.isStopped) agent.isStopped = true;
-            anim.SetBool("grabGarbage", true);
-            garbage.AddBot(this);
+            if (other.gameObject.tag == "Garbage")
+            {
+                if (!agent.isStopped) agent.isStopped = true;
+                anim.SetBool("grabGarbage", true);
+                garbage.AddBot(this);
 
-            stillInGarbage = true;
-            StartCoroutine(MonitorIfNeedToMoveCloser());
-        } else if (other.gameObject.tag == "Player") {
-            VerifyRepair();
+                stillInGarbage = true;
+                StartCoroutine(MonitorIfNeedToMoveCloser());
+            }
+            else if (other.gameObject.tag == "Player")
+            {
+                VerifyRepair();
+            }
         }
     }
 
@@ -213,10 +219,13 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Garbage")
+        if (friendly)
         {
-            stillInGarbage = true;
-        }
+            if (other.gameObject.tag == "Garbage")
+            {
+                stillInGarbage = true;
+            }
+        }   
     }
 
     IEnumerator MonitorIfNeedToMoveCloser()

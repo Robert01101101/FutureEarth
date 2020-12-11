@@ -10,6 +10,7 @@ TagManager:
   - player_forwardposition
   - Enemy
   - Garbage
+  - Mountain
   layers:
   - Default
   - TransparentFX

@@ -5,11 +5,17 @@ using UnityEngine;
 public class SpawnEnemy : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public Transform spawnCenter1, spawnCenter2;
+    public int width;
+    public int height;
     public int minEnemies;
     public int maxEnemies;
     private int enemyCount = 0;
     private bool spawnRoutineRunning = true;
+
+    private void Start()
+    {
+        SpawnEnemies();
+    }
 
     public void SpawnEnemies()
     {
@@ -54,32 +60,29 @@ public class SpawnEnemy : MonoBehaviour
     private void EnemyDrop()
     {
         //ensure not spawning right next to player
-        bool closeToPlayer = true;
+        bool closeToPlayer = true; bool notGround = true;
         Vector3 alignedSpawnPosition = Vector3.zero;
 
-        while (closeToPlayer)
+        while (closeToPlayer || notGround)
         {
-            //coinflip
-            Vector3 spawnCenter = (Random.value < .5f) ? spawnCenter1.position : spawnCenter2.position;
+            Vector3 spawnCenter = transform.position;
 
             //Determine random location based on the spawn center
-            Vector2 offset = Random.insideUnitCircle * 15f;
-            Vector3 spawnPosition = new Vector3(spawnCenter.x + offset.x, spawnCenter.y, spawnCenter.z + offset.y);
+            Vector2 offset = new Vector2(Random.Range(-width / 2, width / 2), Random.Range(-height / 2, height / 2));
+            Vector3 spawnPosition = new Vector3(spawnCenter.x + offset.x, spawnCenter.y+50, spawnCenter.z + offset.y);
             alignedSpawnPosition = spawnPosition;
 
             //determine correct y position using raycast to ground
-            // Only detect ground collision
-            int layerMask = 1 << 8;
 
             RaycastHit hit;
-            if (Physics.Raycast(spawnPosition, Vector3.down, out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(spawnPosition, Vector3.down, out hit, Mathf.Infinity))
             {
                 //Place at hit
                 alignedSpawnPosition = hit.point;
+                if (hit.collider.gameObject.tag != "Mountain" && hit.collider.gameObject.tag != "Garbage" && hit.collider.gameObject.layer == 8) notGround = false;
             }
 
             if ((alignedSpawnPosition - PlayerCtrl.playerCtrl.gameObject.transform.position).magnitude > 10) closeToPlayer = false;
-
             //TODO: Add more checks -> Ensure player not looking in that direction
         }
 
@@ -94,5 +97,13 @@ public class SpawnEnemy : MonoBehaviour
     public void RemoveEnemy()
     {
         enemyCount--;
+    }
+
+    ///////////////////////////////////////////////////////////////////// DEBUG //////////////////////////////////////////////////
+    //Visualize spawn area in Scene 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = UnityEngine.Color.red;
+        Gizmos.DrawWireCube(transform.position, new Vector3(width, 20, height));
     }
 }
