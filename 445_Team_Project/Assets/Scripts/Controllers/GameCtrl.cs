@@ -28,6 +28,7 @@ public class GameCtrl : MonoBehaviour
     //Other
     [HideInInspector] public static lb_BirdController birdCtrl;
     [HideInInspector] public static SpawnEnemy spawnEnemy;
+    private static List<GameObject> garbagePiles;
 
     [Space(10)]
     [Header("Environment Mood")]
@@ -55,6 +56,8 @@ public class GameCtrl : MonoBehaviour
         birdCtrl = GetComponent<lb_BirdController>();
         spawnEnemy = GetComponent<SpawnEnemy>();
         ResetEnvironmentMood();
+        //Find all garbage piles
+        garbagePiles = new List <GameObject>(GameObject.FindGameObjectsWithTag("Garbage"));
     }
 
     private void Update()
@@ -161,6 +164,30 @@ public class GameCtrl : MonoBehaviour
     public static int GetWaterFilterCount() { return waterFilterList.Count; }
 
     public static int GetPartCount() { return sparePartList.Count; }
+
+    public static GameObject GetClosestGarbagePile(Transform botLocation)
+    {
+        float distance = 1000;
+        GameObject output = null;
+
+        //find closest garbage pile
+        foreach (GameObject garbagePile in garbagePiles)
+        {
+            float curDistance = Vector3.Distance(botLocation.position, garbagePile.transform.position);
+            if (curDistance < distance)
+            {
+                distance = curDistance;
+                output = garbagePile;
+            }
+        }
+
+        return output;
+    }
+
+    public static void RemovePileFromList(GameObject pile)
+    {
+        if (garbagePiles.Contains(pile)) garbagePiles.Remove(pile);
+    }
 
     public static void RemovePartsFromList()
     {

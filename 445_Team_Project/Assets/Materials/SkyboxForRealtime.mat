@@ -117,7 +117,7 @@ Material:
     - _UpVectorYaw: 0
     - _ZWrite: 1
     m_Colors:
-    - _BottomColor: {r: 0.90800005, g: 0.86078405, b: 0.837176, a: 0}
+    - _BottomColor: {r: 0.9206809, g: 0.87997293, b: 0.8596189, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 0.5058824, g: 0.5058824, b: 0.5058824, a: 0}
     - _Color2: {r: 0.7352941, g: 0.7352941, b: 0.7352941, a: 0}
@@ -126,9 +126,9 @@ Material:
     - _FirstColor: {r: 1, g: 1, b: 1, a: 1}
     - _GradientDirection: {r: 0, g: 1, b: 0, a: 0}
     - _GroundColor: {r: 0.369, g: 0.349, b: 0.341, a: 1}
-    - _HorizonColor: {r: 0.69, g: 0.62453026, b: 0.5244, a: 0}
+    - _HorizonColor: {r: 0.7181346, g: 0.6703374, b: 0.5872518, a: 0}
     - _SecondColor: {r: 0.5058824, g: 0.5058824, b: 0.5058824, a: 1}
     - _SkyTint: {r: 0.1102941, g: 0.1102941, b: 0.1102941, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
-    - _TopColor: {r: 0.674, g: 0.6043597, b: 0.49741203, a: 0}
+    - _TopColor: {r: 0.65461123, g: 0.634569, b: 0.56668633, a: 0}
     - _UpVector: {r: 0, g: 1, b: 0, a: 0}

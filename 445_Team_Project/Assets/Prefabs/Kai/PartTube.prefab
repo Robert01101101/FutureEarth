@@ -182,6 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7900723714966628492}
   - component: {fileID: 156196845564383923}
+  - component: {fileID: 7839352474081708005}
   m_Layer: 0
   m_Name: PartTube
   m_TagString: Untagged
@@ -219,6 +220,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPartType: 0
+--- !u!135 &7839352474081708005
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7417097596665557558}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9134163986942809575
 GameObject:
   m_ObjectHideFlags: 0

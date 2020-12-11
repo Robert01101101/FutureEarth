@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 526763087662675713}
   - component: {fileID: 598165088681449686}
+  - component: {fileID: 3138308272208892938}
   m_Layer: 0
   m_Name: PartPump
   m_TagString: Untagged
@@ -78,6 +79,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPartType: 0
+--- !u!135 &3138308272208892938
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865993570213670331}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1361751374829261164
 GameObject:
   m_ObjectHideFlags: 0

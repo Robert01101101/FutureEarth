@@ -9,6 +9,12 @@ ModelImporter:
   - first:
       74: -3704289112126983070
     second: Shoot
+  - first:
+      74: -6453634438983764395
+    second: Disable
+  - first:
+      74: 8973224345516782808
+    second: Enable
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -171,8 +177,37 @@ ModelImporter:
       name: Grab
       takeName: Take 001
       internalID: 0
-      firstFrame: 56
-      lastFrame: 184
+      firstFrame: 75
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Shoot
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 216
+      lastFrame: 290
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -197,11 +232,40 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Shoot
+      name: Disable
       takeName: Take 001
       internalID: 0
-      firstFrame: 216
-      lastFrame: 290
+      firstFrame: 75
+      lastFrame: 95
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Enable
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 75
+      lastFrame: 95
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

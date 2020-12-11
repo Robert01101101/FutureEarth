@@ -28,7 +28,7 @@ public class PlayerProjectile : MonoBehaviour
         if (collision.transform.tag == "Enemy")
         {
             // do damage here, for example:
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(bulletDamage);
+            collision.gameObject.GetComponent<EnemyController>().TakeDamage(bulletDamage);
             Debug.Log(collision);
             Destroy(gameObject);
         } else if (collision.gameObject.layer == 8) {

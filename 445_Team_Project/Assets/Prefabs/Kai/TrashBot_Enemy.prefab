@@ -697,7 +697,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3946909603772685663}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.00000001638628, y: 0, z: 0}
 --- !u!33 &8089117902235285937
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2670,7 +2670,7 @@ Transform:
   - {fileID: 8309296561114488957}
   m_Father: {fileID: 7638143371439609584}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -25.09827, y: 0, z: 0}
 --- !u!1 &6388673477133753699
 GameObject:
   m_ObjectHideFlags: 0
@@ -3056,7 +3056,7 @@ GameObject:
   - component: {fileID: 7638143371439609584}
   - component: {fileID: 7893292340030476913}
   m_Layer: 0
-  m_Name: offremovalbot5 (1)
+  m_Name: TrashBot_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3071,7 +3071,7 @@ Transform:
   m_GameObject: {fileID: 7010963609754389578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -64.547, y: 99.894, z: 124.19}
-  m_LocalScale: {x: 1056.2384, y: 1056.2384, z: 1056.2384}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 7034415090211881088}
   - {fileID: 3909769775610100340}
@@ -3188,7 +3188,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bcb5fa469d41557499f697a7b08af486, type: 2}
+  - {fileID: 2100000, guid: dbba90b0f2165b342bf22fc5c0ee27cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4032,7 +4032,7 @@ Transform:
   - {fileID: 7256717223375037457}
   m_Father: {fileID: 7638143371439609584}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -28.63761, y: 0, z: 0}
 --- !u!1 &8577151383833698983
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ TagManager:
   - lb_perchTarget
   - player_forwardposition
   - Enemy
+  - Garbage
   layers:
   - Default
   - TransparentFX

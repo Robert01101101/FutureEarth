@@ -32,11 +32,13 @@ public class ClippyUI : MonoBehaviour
     private bool grabbed = false;
     private bool thrown = false;
 
-    ///////////////// A3 specific (sequence intro screens & spawn seeds)
+    /////////////////
     private bool waitingForGrip = false;
     public GameObject intro, intro2, intro3, intro4, introPanel, mainPanel, intro2Picture, tabMission, tabStats, tabBuild;
     public VRbtn intro2Btn, intro3Btn, intro4Btn, waterFilterBtn, tabMissionBtn, tabStatsBtn, tabBuildBtn;
-    public TextMeshProUGUI statsValues;
+
+    public TextMeshProUGUI statsValues, timeText;
+    private string timeString = "Date:\n2720 | 03 | 23\n\nTime:\n";
 
     ////////////////////////////////////////////////////////////////////////// Init
     private void Start()
@@ -61,9 +63,7 @@ public class ClippyUI : MonoBehaviour
             introPanel.SetActive(false);
             mainPanel.SetActive(true);
 
-            tabMission.SetActive(true);
-            tabStats.SetActive(false);
-            tabBuild.SetActive(false);
+            BtnTabMission();
         }
     }
 
@@ -165,6 +165,8 @@ public class ClippyUI : MonoBehaviour
         tabMissionBtn.SetAltCol(false);
         tabStatsBtn.SetAltCol(true);
         tabBuildBtn.SetAltCol(true);
+
+        timeText.text = timeString + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute;
     }
 
     public void BtnTabStats()

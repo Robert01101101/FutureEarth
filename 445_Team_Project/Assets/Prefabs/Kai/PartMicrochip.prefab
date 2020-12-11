@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5472329884678186659}
   - component: {fileID: 4379241561700226685}
+  - component: {fileID: 6596004719828188556}
   m_Layer: 0
   m_Name: PartMicrochip
   m_TagString: Untagged
@@ -131,3 +132,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisPartType: 0
+--- !u!135 &6596004719828188556
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4664127937661844505}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
