@@ -473,12 +473,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e181014f0744ab42a8f175f7459635c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 114814335985169384, guid: 9bc68b88af7422a4d9d3e3865ad06d73,
+  bulletPrefab: {fileID: 6834993830567302041, guid: fcaf20ea06918224492f40b97c888f7b,
     type: 3}
   barrelLocation: {fileID: 8972033362230870518}
   shotPower: 500
   damage: 10
   shootingButton: 8192
+  muzzleFlash: {fileID: 8328830518431032487, guid: f88fe57c64813dd44ade95497964a632,
+    type: 3}
 --- !u!1 &7438303312927276153
 GameObject:
   m_ObjectHideFlags: 0
