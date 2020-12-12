@@ -70,13 +70,13 @@ public class Seed : MonoBehaviour
 
     IEnumerator SpawnTrees()
     {
-        //spawn one tree where the seed hit & two more with offsets
+        //spawn one tree where the seed hit & 3 more with offsets
         done = true;
         SpawnTree(new Vector3(transform.position.x, transform.position.y - .2f, transform.position.z));
-        for (int i=0; i<2; i++)
+        for (int i=0; i<3; i++)
         {
             yield return new WaitForSeconds(.6f);
-            Vector2 offset = Random.insideUnitCircle * 1.5f;
+            Vector2 offset = Random.insideUnitCircle * 1.7f;
             SpawnTree(new Vector3(transform.position.x + offset.x, transform.position.y - .2f, transform.position.z + offset.y));
         }
         Destroy(gameObject);

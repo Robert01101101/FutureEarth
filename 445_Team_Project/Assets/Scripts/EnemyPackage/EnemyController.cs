@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     private AudioSource enemyShotSound;
 
     //Garbage cleaning
-    private bool friendly = true;
+    private bool friendly = false;
     private bool lookingForGarbage = true;
     private bool stillInGarbage = true;
     private Garbage garbage;

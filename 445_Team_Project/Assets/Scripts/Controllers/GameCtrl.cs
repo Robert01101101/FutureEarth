@@ -38,7 +38,6 @@ public class GameCtrl : MonoBehaviour
     public ParticleSystem dust1, dust2;
     public PostProcessVolume ppBefore, ppAfter;
     public Light sun;
-    public GameObject tmpFence;
 
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
@@ -70,7 +69,7 @@ public class GameCtrl : MonoBehaviour
     ///////////////////////////////////////////////////////// TREE HEALTH /////////////////////////////////////////
     private void MonitorTreeHealth()
     {
-        int unsustainableTreesCount = treeList.Count - waterFilterList.Count*10;
+        int unsustainableTreesCount = treeList.Count - waterFilterList.Count*20;
         if (unsustainableTreesCount > 0)
         {
             Debug.Log("tooManyTrees");
@@ -96,7 +95,6 @@ public class GameCtrl : MonoBehaviour
     {
         yield return new WaitForSeconds(9);
         PlayerCtrl.playerCtrl.PlayClippyAudio(11);
-        tmpFence.SetActive(false);
     }
 
     ///////////////////////////////////////////////////////// Environment Change /////////////////////////////////////////
@@ -137,7 +135,12 @@ public class GameCtrl : MonoBehaviour
     }
 
     ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////
-    public static void AddTreeToList(Tree tree) { treeList.Add(tree); GameCtrl.gameCtrl.SetEnvironment(treeList.Count / 100); }
+    public static void AddTreeToList(Tree tree) { 
+        treeList.Add(tree); 
+        GameCtrl.gameCtrl.SetEnvironment(treeList.Count / 100);
+        if (treeList.Count == 100) PlayerCtrl.playerCtrl.PlayClippyAudio(22);
+    
+    }
 
     public static void AddWaterFilterToList (WaterFilter waterFilter) { 
         waterFilterList.Add(waterFilter);
