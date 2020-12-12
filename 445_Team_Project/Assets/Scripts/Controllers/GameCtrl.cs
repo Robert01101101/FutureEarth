@@ -28,6 +28,7 @@ public class GameCtrl : MonoBehaviour
     //Other
     [HideInInspector] public static lb_BirdController birdCtrl;
     [HideInInspector] public static SpawnEnemy spawnEnemy;
+    [HideInInspector] public static int partsFound = 0;
     private static List<GameObject> garbagePiles;
 
     [Space(10)]
@@ -37,6 +38,7 @@ public class GameCtrl : MonoBehaviour
     public ParticleSystem dust1, dust2;
     public PostProcessVolume ppBefore, ppAfter;
     public Light sun;
+    public GameObject tmpFence;
 
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
@@ -94,37 +96,22 @@ public class GameCtrl : MonoBehaviour
     {
         yield return new WaitForSeconds(9);
         PlayerCtrl.playerCtrl.PlayClippyAudio(11);
+        tmpFence.SetActive(false);
     }
 
     ///////////////////////////////////////////////////////// Environment Change /////////////////////////////////////////
     private void ResetEnvironmentMood() {
         SetEnvironment(0);
-        StartCoroutine(SkyLerp());
-    }
-
-    IEnumerator SkyLerp()
-    {
-        yield return new WaitForSeconds(30);
-
-        float time = 60;
-        float elapsedTime = 0;
-
-        while (elapsedTime < time)
-        {
-            SetEnvironment(elapsedTime / time);
-
-            elapsedTime += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
+        //StartCoroutine(SkyLerp());
     }
 
     //Sets the mood of the environment (skybox, fog, dust, water). Input a value between 0 (beginning: grim) and 1 (ending: bright).
-    int startDust = 600;
-    int endDust = 0;
-    int startFogLimit = 300;
-    int endFogLimit = 1250;
-    int startFog = 0;
-    int endFog = 50;
+    private int startDust = 600;
+    private int endDust = 0;
+    private int startFogLimit = 300;
+    private int endFogLimit = 1250;
+    private int startFog = 0;
+    private int endFog = 50;
     private void SetEnvironment (float lerp)
     {
         Color horizonCol = Color.Lerp(startColors[1], endColors[1], lerp);
@@ -150,7 +137,7 @@ public class GameCtrl : MonoBehaviour
     }
 
     ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////
-    public static void AddTreeToList(Tree tree) { treeList.Add(tree);  }
+    public static void AddTreeToList(Tree tree) { treeList.Add(tree); GameCtrl.gameCtrl.SetEnvironment(treeList.Count / 100); }
 
     public static void AddWaterFilterToList (WaterFilter waterFilter) { 
         waterFilterList.Add(waterFilter);
@@ -199,5 +186,10 @@ public class GameCtrl : MonoBehaviour
         {
             sparePartList.RemoveAt(sparePartList.Count - 1);
         }
+    }
+
+    public static bool CheckIfEnoughParts()
+    {
+        return (GameCtrl.GetPartCount(PartType.chip) >= 1 && GameCtrl.GetPartCount(PartType.pump) >= 2 && GameCtrl.GetPartCount(PartType.tube) >= 3);
     }
 }

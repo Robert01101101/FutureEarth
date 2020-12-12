@@ -14,12 +14,12 @@ public class SpawnEnemy : MonoBehaviour
 
     private void Start()
     {
-        SpawnEnemies();
+
     }
 
     public void SpawnEnemies()
     {
-        for (int i = 0; i < maxEnemies; i++)
+        for (int i = 0; i < minEnemies; i++)
         {
             EnemyDrop();
         }
@@ -30,6 +30,7 @@ public class SpawnEnemy : MonoBehaviour
     {
         if (!spawnRoutineRunning)
         {
+            if (GameCtrl.GetTreeCount() >= 100) minEnemies = 2; maxEnemies = 5;
             if (enemyCount < maxEnemies)
             {
                 //Debug.Log("Spawn New Enemy");
@@ -91,6 +92,17 @@ public class SpawnEnemy : MonoBehaviour
         //Add random rotation
         spawnedEnemy.transform.Rotate(0f, Random.Range(0f, 360f), 0f);
         enemyCount++;
+
+        //update min & max targets based on tree count
+        if (GameCtrl.GetTreeCount() < 50)
+        {
+            minEnemies = (int)(Util.mapVal(GameCtrl.GetTreeCount(), 0, 50, 8, 16));
+            maxEnemies = minEnemies * 2;
+        } else
+        {
+            minEnemies = (int)(Util.mapVal(GameCtrl.GetTreeCount(), 50, 100, 16, 5));
+            maxEnemies = minEnemies * 2;
+        }
     }
 
     /////////////////////////////////////// PUBLIC INTERFACE

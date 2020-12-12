@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     private AudioSource enemyShotSound;
 
     //Garbage cleaning
-    private bool friendly = false;
+    private bool friendly = true;
     private bool lookingForGarbage = true;
     private bool stillInGarbage = true;
     private Garbage garbage;
@@ -78,6 +78,12 @@ public class EnemyController : MonoBehaviour
                 if (lookingForGarbage) ChaseGarbage();
             }
         }
+
+        if (agent.isStopped) Debug.Log("NavAgent stopped");
+        if (!agent.isActiveAndEnabled) Debug.Log("NavAgent inactive");
+        if (!agent.isOnNavMesh) Debug.Log("NavAgent not on nav mesh");
+        if (agent.isPathStale) Debug.Log("Agent Path is stale");
+        if (agent.isOnOffMeshLink) Debug.Log("Agent isOnOffMeshLink");
     }
 
     ///////////////////////////////////////////////////////////// PORTED OVER FROM ENEMY CLASS ////////////////////////////////////////////////
@@ -87,27 +93,43 @@ public class EnemyController : MonoBehaviour
         // other stuff you want to happen when enemy takes damage
         if (health <= 0)
         {
-            Die();
+            if (!dying) Die();
         }
     }
 
+    private bool dying = false;
     void Die()
     {
-        if (!friendly) GameCtrl.spawnEnemy.RemoveEnemy();
-        int pick = Random.Range(0, 8); //77% chance to drop part
-
-        if (pick < 6)
-        {
-            //spawn part (law of large number dictates that player will get 1 chip, 2 pumps, 3 tubes)
-            if (pick == 1 || pick == 2) { pick = 1; }
-            else if (pick > 2) pick = 2;
-            GameObject spawnPart = partArray[pick];
-            Instantiate(spawnPart, transform.position, transform.rotation);
-            Destroy(gameObject);
+        dying = true;
+        GameCtrl.spawnEnemy.RemoveEnemy();
+        
+        if (GameCtrl.partsFound < 3) { 
+            if (GameCtrl.partsFound == 0) { GameCtrl.partsFound++; Instantiate(partArray[0], transform.position, transform.rotation); Destroy(gameObject); }
+            else if (GameCtrl.partsFound == 1) { GameCtrl.partsFound++; Instantiate(partArray[1], transform.position, transform.rotation); Destroy(gameObject); }
+            else if (GameCtrl.partsFound == 2) { GameCtrl.partsFound++; Instantiate(partArray[2], transform.position, transform.rotation); Destroy(gameObject); }
         } else
         {
-            //turn into good bot
-            DisableBot();
+            int pick = Random.Range(0, 7);
+            if (pick > 5 && GameCtrl.GetWaterFilterCount() < 1) pick = Random.Range(1, 4);
+            if (pick < 6)
+            {
+                //spawn part (law of large number dictates that player will get 1 chip, 2 pumps, 3 tubes)
+                if (pick == 1 || pick == 2) { pick = 1; }
+                else if (pick > 2) pick = 2;
+                GameObject spawnPart = partArray[pick];
+                Instantiate(spawnPart, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
+            else
+            {
+                //turn into good bot
+                DisableBot();
+                if (!PlayerCtrl.explainedBotSlap)
+                {
+                    PlayerCtrl.explainedBotSlap = true;
+                    PlayerCtrl.playerCtrl.PlayClippyAudio(20);
+                }
+            }
         }
     }
 
@@ -161,6 +183,8 @@ public class EnemyController : MonoBehaviour
         anim.SetBool("awaitingRepair", true);
         anim.SetBool("chasePlayer", false);
         anim.SetBool("grabGarbage", false);
+        if (!agent.isStopped) agent.isStopped = true;
+        agent.stoppingDistance = 0;
 
         Debug.Log("Bot Disabled");
     }
@@ -169,12 +193,12 @@ public class EnemyController : MonoBehaviour
     IEnumerator TurnIntoGoodBot()
     {
         //TODO: play metal bang sound to indicate it worked
-
-        yield return new WaitForSeconds(1);
         eyeRenderer.material = goodMat;
         altIndicator.material = goodMat;
-        lookingForGarbage = true;
 
+        yield return new WaitForSeconds(1);
+        
+        lookingForGarbage = true;
         anim.SetBool("awaitingRepair", false);
     }
     
@@ -184,18 +208,23 @@ public class EnemyController : MonoBehaviour
         anim.SetBool("chasePlayer", true);
         if (agent.isStopped) agent.isStopped = false;
 
-        garbage = GameCtrl.GetClosestGarbagePile(this.transform).GetComponent<Garbage>();
+        if (garbage == null) garbage = GameCtrl.GetClosestGarbagePile(this.transform).GetComponent<Garbage>();
         agent.SetDestination(garbage.transform.position);
+
+        Debug.Log("Chasing garbage");
+        Debug.Log("Garbage target = " + garbage.gameObject.name);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (friendly)
         {
+            Debug.Log("hit: " + other.gameObject.name);
             if (other.gameObject.tag == "Garbage")
             {
                 if (!agent.isStopped) agent.isStopped = true;
                 anim.SetBool("grabGarbage", true);
+                if (garbage.gameObject != other.gameObject) garbage = other.gameObject.GetComponent<Garbage>();
                 garbage.AddBot(this);
 
                 stillInGarbage = true;
@@ -212,6 +241,12 @@ public class EnemyController : MonoBehaviour
     {
         if (waitingForRepair)
         {
+            if (!PlayerCtrl.slappedBot)
+            {
+                PlayerCtrl.slappedBot = true;
+                PlayerCtrl.playerCtrl.PlayClippyAudio(21);
+            }
+
             StartCoroutine(TurnIntoGoodBot());
             waitingForRepair = false;
         }
@@ -236,6 +271,7 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
+        Debug.Log("moving closer");
         //garbage too far. stop animation & scooch closer
         anim.SetBool("grabGarbage", false);
         garbage.RemoveBot(this);
@@ -243,11 +279,30 @@ public class EnemyController : MonoBehaviour
         ChaseGarbage();
     }
 
+    
+    Vector3 lastPos = Vector3.zero;
+    IEnumerator BugFixMonitor()
+    {
+        while (friendly)
+        {
+            if (Vector3.Distance(transform.position, lastPos) < .1f)
+            {
+                //hasn't moved
+            } else
+            {
+
+            }
+            lastPos = transform.position;
+            yield return new WaitForSeconds(8);
+        }
+    }
+
     public void FindNewPile()
     {
         stillInGarbage = false;
         anim.SetBool("grabGarbage", false);
         anim.SetBool("chasePlayer", true);
+        garbage = GameCtrl.GetClosestGarbagePile(this.transform).GetComponent<Garbage>();
         ChaseGarbage();
     }
 

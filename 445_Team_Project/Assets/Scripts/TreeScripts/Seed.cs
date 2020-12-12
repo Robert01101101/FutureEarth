@@ -55,12 +55,7 @@ public class Seed : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            done = true;
-            GameObject treeInstance = Instantiate(treePrefab, new Vector3(transform.position.x, transform.position.y-.2f, transform.position.z),
-                   Quaternion.identity);
-            treeInstance.GetComponent<Tree>().Init();
-            GameCtrl.gameCtrl.gameObject.GetComponent<lb_BirdController>().TreeSpawn();
-            Destroy(gameObject);
+            StartCoroutine(SpawnTrees());
         }
     }
 
@@ -69,12 +64,28 @@ public class Seed : MonoBehaviour
     {
         if (collision.gameObject.layer == 8 && !done)
         {
-            done = true;
-            GameObject treeInstance = Instantiate(treePrefab, new Vector3(transform.position.x, transform.position.y - .2f, transform.position.z),
-                   Quaternion.identity);
-            treeInstance.GetComponent<Tree>().Init();
-            GameCtrl.gameCtrl.gameObject.GetComponent<lb_BirdController>().TreeSpawn();
-            Destroy(gameObject);
+            StartCoroutine(SpawnTrees());
         }
+    }
+
+    IEnumerator SpawnTrees()
+    {
+        //spawn one tree where the seed hit & two more with offsets
+        done = true;
+        SpawnTree(new Vector3(transform.position.x, transform.position.y - .2f, transform.position.z));
+        for (int i=0; i<2; i++)
+        {
+            yield return new WaitForSeconds(.6f);
+            Vector2 offset = Random.insideUnitCircle * 1.5f;
+            SpawnTree(new Vector3(transform.position.x + offset.x, transform.position.y - .2f, transform.position.z + offset.y));
+        }
+        Destroy(gameObject);
+    }
+
+    private void SpawnTree(Vector3 pos)
+    {
+        GameObject treeInstance = Instantiate(treePrefab, pos, Quaternion.identity);
+        treeInstance.GetComponent<Tree>().Init();
+        GameCtrl.gameCtrl.gameObject.GetComponent<lb_BirdController>().TreeSpawn();
     }
 }

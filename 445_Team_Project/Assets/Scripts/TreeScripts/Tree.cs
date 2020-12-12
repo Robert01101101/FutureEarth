@@ -146,6 +146,7 @@ public class Tree : MonoBehaviour
                 StartDeath();
             } else
             {
+                /*
                 ///////Add Grass
                 int grassCount = (int)Random.Range(20f, 25f);
                 //Add Grass Parent
@@ -169,6 +170,7 @@ public class Tree : MonoBehaviour
                 }
                 //Make gras grow vertically
                 StartCoroutine(GrassGrowth());
+                */
             }
         }
     }

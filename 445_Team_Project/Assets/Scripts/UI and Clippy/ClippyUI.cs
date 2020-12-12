@@ -188,7 +188,7 @@ public class ClippyUI : MonoBehaviour
 
         inventoryValues.text = chips + "\n<size=50%> \n </size>\n" +
             tubes + "\n<size=50%> \n </size>\n" +
-            tubes;
+            pumps;
 
         imgChip.SetActive(chips >= 1);
         imgPump1.SetActive(pumps >= 1);
@@ -229,7 +229,7 @@ public class ClippyUI : MonoBehaviour
     IEnumerator WaterFilterBtnDelay()
     {
         yield return new WaitForEndOfFrame();
-        if (CheckIfEnoughParts())
+        if (GameCtrl.CheckIfEnoughParts())
         {
             waterFilterBtn.SetInteractable(true);
         }
@@ -285,7 +285,7 @@ public class ClippyUI : MonoBehaviour
         clippy.SpawnWaterFiler();
         StartCoroutine(DelayedAutoClose());
         GameCtrl.RemovePartsFromList();
-        if (CheckIfEnoughParts())
+        if (GameCtrl.CheckIfEnoughParts())
         {
             waterFilterBtn.SetInteractable(true);
         }
@@ -293,11 +293,6 @@ public class ClippyUI : MonoBehaviour
         {
             waterFilterBtn.SetInteractable(false);
         }
-    }
-
-    private bool CheckIfEnoughParts()
-    {
-        return (GameCtrl.GetPartCount(PartType.chip) >= 1 && GameCtrl.GetPartCount(PartType.pump) >= 2 && GameCtrl.GetPartCount(PartType.tube) >= 3);
     }
 
 }

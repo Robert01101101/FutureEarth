@@ -144,11 +144,11 @@ NavMeshAgent:
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
-  m_BaseOffset: 1.07
+  m_BaseOffset: 1.27
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!136 &4898928675045336354
 CapsuleCollider:
   m_ObjectHideFlags: 0

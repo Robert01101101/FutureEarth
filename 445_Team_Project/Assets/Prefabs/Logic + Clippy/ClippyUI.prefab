@@ -1297,7 +1297,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Date:
 
-    2720 \ 03 \ 23
+    2920 \ 03 \ 23
 
 
     Time:
@@ -3154,7 +3154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1015230127426767827
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6992,7 +6992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2576172972707272162
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7339,7 +7339,7 @@ MonoBehaviour:
     2) Build water filters
 
 
-    3) Plant trees
+    3) Plant 100 trees
 
 '
   m_isRightToLeft: 0

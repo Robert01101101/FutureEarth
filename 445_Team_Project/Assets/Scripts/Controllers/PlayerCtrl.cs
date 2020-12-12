@@ -30,6 +30,8 @@ public class PlayerCtrl : MonoBehaviour
     public static PlayerCtrl playerCtrl;
     [HideInInspector] public static bool clippyIntroDone = false;
     [HideInInspector] public static bool clippyOpen = false;
+    [HideInInspector] public static bool explainedBotSlap = false;
+    [HideInInspector] public static bool slappedBot = false;
 
 
     //Singleton pattern - only one instance that is accessible from anywhere though PlayerCtrl.playerCtrl
@@ -106,11 +108,17 @@ public class PlayerCtrl : MonoBehaviour
         parts++;
         if (parts == 1)
         {
-            clippyAudio[13].Play();
-        }
-        else if (parts == 5)
+            PlayClippyAudio(13);
+        } else if (parts == 2)
         {
-            clippyAudio[14].Play();
+            PlayClippyAudio(14);
+        } else if (parts == 3)
+        {
+            PlayClippyAudio(15);
+        }
+        else if (GameCtrl.CheckIfEnoughParts() && GameCtrl.GetWaterFilterCount() < 1)
+        {
+            PlayClippyAudio(16);
             StartCoroutine(PlantTreesAudio());
         }
     }
@@ -131,7 +139,7 @@ public class PlayerCtrl : MonoBehaviour
 
         //approach enemy timer
         if (clip == 11) StartCoroutine(ApproachEnemyAudio());
-        if (clip == 16) StartCoroutine(MoreTreesAudio());
+        if (clip == 18) StartCoroutine(MoreTreesAudio());
     } 
 
     //////////// Clippy Audio narration up until beginning the mission brief
@@ -142,27 +150,27 @@ public class PlayerCtrl : MonoBehaviour
         yield return new WaitForSeconds(3);
         clippyAudio[0].Play();
         yield return new WaitForSeconds(8);
-        clippyAudio[1].Play();
+        PlayClippyAudio(1);
         yield return new WaitForSeconds(8.5f);
-        clippyAudio[2].Play();
+        PlayClippyAudio(2);
         yield return new WaitForSeconds(3.5f);
 
         //has landed
-        clippyAudio[3].Play();
+        PlayClippyAudio(3);
         ovrPlayerController.SetHaltUpdateMovement(false);
         GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
         yield return new WaitForSeconds(26);
 
-        
+
         //first step
-        clippyAudio[4].Play();
+        PlayClippyAudio(4);
         yield return new WaitForSeconds(11);
         //explore
-        clippyAudio[5].Play();
+        PlayClippyAudio(5);
         yield return new WaitForSeconds(15);
 
         //beginBrief
-        clippyAudio[6].Play();
+        PlayClippyAudio(6);
         GameObject clippyL = Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyR");
         GameObject clippyR = Util.FindInactiveChild(GameObject.Find("LocalAvatar"), "clippyL");
         clippyL.GetComponent<Clippy>().enableClippy();
@@ -172,23 +180,21 @@ public class PlayerCtrl : MonoBehaviour
     }
 
     /////// Event-based clippy timers
-    IEnumerator PlantTreesAudio()
-    {
-        yield return new WaitForSeconds(20);
-        clippyAudio[15].Play();
-    }
-
     IEnumerator ApproachEnemyAudio()
     {
         GameCtrl.spawnEnemy.SpawnEnemies();
-        yield return new WaitForSeconds(30);
-        clippyAudio[12].Play();
+        yield return new WaitForSeconds(25);
+        PlayClippyAudio(12);
     }
-
+    IEnumerator PlantTreesAudio()
+    {
+        yield return new WaitForSeconds(20);
+        PlayClippyAudio(17);
+    }
     IEnumerator MoreTreesAudio()
     {
         yield return new WaitForSeconds(15);
-        clippyAudio[17].Play();
+        PlayClippyAudio(19);
     }
 
     IEnumerator SkipIntroEnableClippy ()
