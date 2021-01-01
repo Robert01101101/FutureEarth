@@ -2214,6 +2214,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1167567049, guid: 91dc3d63483b0414cb4801179b8876a2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904559945803403814, guid: 91dc3d63483b0414cb4801179b8876a2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4904559947339267849, guid: 91dc3d63483b0414cb4801179b8876a2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2274,6 +2283,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OVRPlayerControllerCustom
       objectReference: {fileID: 0}
+    - target: {fileID: 5010141890242675563, guid: 91dc3d63483b0414cb4801179b8876a2,
+        type: 3}
+      propertyPath: CUSTOM_PC_DEBUG
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
         type: 3}
       propertyPath: clippyAudio.Array.size
@@ -2284,7 +2298,30 @@ PrefabInstance:
       propertyPath: clippyAudio.Array.data[22]
       value: 
       objectReference: {fileID: 259495662}
-    m_RemovedComponents: []
+    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
+        type: 3}
+      propertyPath: skipIntro
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
+        type: 3}
+      propertyPath: vignette
+      value: 
+      objectReference: {fileID: 628067589}
+    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
+        type: 3}
+      propertyPath: vignettePresetDefault
+      value: 
+      objectReference: {fileID: 11400000, guid: 17a75a1ed8284714cbd4a977f2537c38,
+        type: 2}
+    - target: {fileID: 8564306373851236648, guid: 91dc3d63483b0414cb4801179b8876a2,
+        type: 3}
+      propertyPath: vignettePresetRed
+      value: 
+      objectReference: {fileID: 11400000, guid: 3bd27142e5e993a4380147a62cfbb00b,
+        type: 2}
+    m_RemovedComponents:
+    - {fileID: 1167567049, guid: 91dc3d63483b0414cb4801179b8876a2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 91dc3d63483b0414cb4801179b8876a2, type: 3}
 --- !u!82 &259495662 stripped
 AudioSource:
@@ -5331,6 +5368,64 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b61a478071d929c408d721342c8a6a91, type: 3}
+--- !u!1 &628067583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4904559947339293475, guid: 91dc3d63483b0414cb4801179b8876a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 259495661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &628067589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628067583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0509641f74d9c24c80e405cf0068b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motionTarget: {fileID: 1367156927}
+  effectColor: {r: 0, g: 0, b: 0, a: 0.9411765}
+  effectCoverage: 0.8
+  effectFeather: 0.13
+  effectSkybox: {fileID: 0}
+  applyColorToBackground: 0
+  useAngularVelocity: 0
+  angularVelocityStrength: 1
+  angularVelocityMin: 0
+  angularVelocityMax: 180
+  angularVelocitySmoothing: 0.15
+  useAcceleration: 0
+  accelerationStrength: 1
+  accelerationMin: 0
+  accelerationMax: 0
+  accelerationSmoothing: 0.15
+  useVelocity: 1
+  velocityStrength: 0.8
+  velocityMin: 0
+  velocityMax: 2
+  velocitySmoothing: 0.15
+  motionEffectTarget: {fileID: 0}
+  useCounterMotion: 0
+  counterRotationStrength: 1
+  counterRotationPerAxis: {x: 0, y: 1, z: 0}
+  useArtificialTilt: 0
+  tiltStrength: 0
+  tiltMaxAngles: {x: 5, y: 5}
+  tiltSmoothTime: 0
+  framerateDivision: 1
+  divideTranslation: 1
+  divideRotation: 1
+  _debugForceOn: 0
+  _debugForceValue: 0
+  drawSkybox: 0
+  useMask: 0
+  drawBeforeTransparent: 0
+  stencilReference: 1
+  stencilMask: 255
+  stencilBias: 1
 --- !u!1001 &630549472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12270,6 +12365,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &1367156927 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4904559947339267849, guid: 91dc3d63483b0414cb4801179b8876a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 259495661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1369821255
 PrefabInstance:
   m_ObjectHideFlags: 0

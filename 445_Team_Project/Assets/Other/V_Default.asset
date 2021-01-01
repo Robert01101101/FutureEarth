@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9722734c14e04d45af688a5ee6cd4e7, type: 3}
+  m_Name: V_Default
+  m_EditorClassIdentifier: 
+  _overrideAll: 0
+  _effectCoverage: 0.8
+  _overrideEffectCoverage: 1
+  _effectColor: {r: 0, g: 0, b: 0, a: 0.9411765}
+  _overrideEffectColor: 1
+  _effectFeather: 0.13
+  _overrideEffectFeather: 1
+  _applyColorToBackground: 0
+  _overrideApplyColorToBackground: 0
+  _skybox: {fileID: 0}
+  _overrideSkybox: 0
+  _angularVelocity:
+    _use: 0
+    _strength: 1
+    _min: 0
+    _max: 0
+    _smoothing: 0
+  _overrideAngularVelocity: 0
+  _acceleration:
+    _use: 0
+    _strength: 1
+    _min: 0
+    _max: 0
+    _smoothing: 0
+  _overrideAcceleration: 0
+  _velocity:
+    _use: 0
+    _strength: 1
+    _min: 0
+    _max: 0
+    _smoothing: 0
+  _overrideVelocity: 0
+  _useCounterMotion: 0
+  _overrideUseCounterMotion: 0
+  _counterRotationStrength: 1
+  _overrideCounterRotationStrength: 0
+  _counterRotationPerAxis: {x: 1, y: 1, z: 1}
+  _overrideCounterRotationPerAxis: 0
+  _useArtificialTilt: 0
+  _overrideUseArtificialTilt: 0
+  _framerateDivision: 1
+  _overrideFramerateDivision: 0
+  _divideTranslation: 1
+  _overrideDivideTranslation: 0
+  _divideRotation: 1
+  _overrideDivideRotation: 0
+  _drawSkybox: 0
+  _overrideDrawSkybox: 0
+  _drawBeforeTransparent: 0
+  _overrideDrawBeforeTransparent: 0
+  _useMask: 0
+  _overrideUseMask: 0
+  _stencilReference: 1
+  _overrideStencilReference: 0
+  _stencilMask: 255
+  _overrideStencilMask: 0
+  _stencilBias: 1
+  _overrideStencilBias: 0

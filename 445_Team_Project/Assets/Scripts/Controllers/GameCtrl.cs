@@ -64,6 +64,10 @@ public class GameCtrl : MonoBehaviour
     private void Update()
     {
         MonitorTreeHealth();
+
+        //DEBUG through button pressing
+        //if (Input.GetKeyDown(KeyCode.T)) GameCtrl.AddTreeToList(null);
+        //if (Input.GetKeyDown(KeyCode.V)) PlayerCtrl.playerCtrl.PlayerHitVignette();
     }
 
     ///////////////////////////////////////////////////////// TREE HEALTH /////////////////////////////////////////
@@ -112,6 +116,7 @@ public class GameCtrl : MonoBehaviour
     private int endFog = 50;
     private void SetEnvironment (float lerp)
     {
+        lerp = Util.capVal(lerp, 0, 1);
         Color horizonCol = Color.Lerp(startColors[1], endColors[1], lerp);
         //sky
         skyBox.SetColor("_TopColor", Color.Lerp(startColors[0], endColors[0], lerp));
@@ -135,10 +140,11 @@ public class GameCtrl : MonoBehaviour
     }
 
     ///////////////////////////////////////////////////////// PUBLIC INTERFACE /////////////////////////////////////////
+    private static int targetTreeCount = 100;
     public static void AddTreeToList(Tree tree) { 
         treeList.Add(tree); 
-        GameCtrl.gameCtrl.SetEnvironment(treeList.Count / 100);
-        if (treeList.Count == 100) PlayerCtrl.playerCtrl.PlayClippyAudio(22);
+        GameCtrl.gameCtrl.SetEnvironment((float)treeList.Count / (float)targetTreeCount);
+        if (treeList.Count == targetTreeCount) PlayerCtrl.playerCtrl.PlayClippyAudio(22);
     
     }
 

@@ -366,5 +366,12 @@ namespace Sigtrap.VrTunnellingPro {
 			ApplyEyeMatrices(_irisMatOuter);
 			ApplyEyeMatrices(_irisMatInner);
 		}
+
+		//CUSTOM CODE
+		public void SetForceMode(bool enabled, float val)
+		{
+			_debugForceOn = enabled;
+			_debugForceValue = val;
+		}
 	}
 }

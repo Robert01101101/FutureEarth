@@ -16,8 +16,8 @@ using Sigtrap.VrTunnellingPro;
 public class PlayerCtrl : MonoBehaviour
 {
     public bool skipIntro;
-    public Tunnelling vignette;
-    public TunnellingPreset vignettePresetDefault, vignettePresetRed;
+    public TunnellingMobile vignette;
+    public TunnellingPresetMobile vignettePresetDefault, vignettePresetRed;
 
     //OVR
     OVRPlayerController ovrPlayerController;
@@ -51,7 +51,6 @@ public class PlayerCtrl : MonoBehaviour
 
     /////////////////////////////////////////////////////////////////////// PLAYER HIT VFX /////////////////////////////////////////////
     //Turn vision red on hit
-    //TODO: Fix - works in editor but not in build
     public void PlayerHitVignette()
     {
         StartCoroutine(PlayerHitVignetteRoutine());

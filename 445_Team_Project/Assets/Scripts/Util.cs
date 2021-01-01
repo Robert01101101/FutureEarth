@@ -23,6 +23,11 @@ public class Util : MonoBehaviour
         }
     }
 
+    public static float capVal(float s, float a, float b)
+    {
+        return ((s < a ? a : s) > b ? b : s);
+    }
+
     //From: https://answers.unity.com/questions/890636/find-an-inactive-game-object.html?_ga=2.231808671.1877443542.1603150124-1744466240.1597356417
     //Lets us find inactive GOs as long as they are children of a known GO. Is safer to use than:
     //We could use Resources.FindObjectsOfTypeAll() as an alternative. However, this is very risky, as it can modify prefabs and other resources in the project if not used correctly.
