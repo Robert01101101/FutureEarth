@@ -4669,8 +4669,8 @@ GameObject:
   - component: {fileID: 4904559947338906927}
   - component: {fileID: 4904559947340785055}
   - component: {fileID: 4904559947333487037}
-  - component: {fileID: 1167567049}
   - component: {fileID: 610446590}
+  - component: {fileID: 628067589}
   m_Layer: 9
   m_Name: CenterEyeAnchor
   m_TagString: Player
@@ -4759,72 +4759,6 @@ MonoBehaviour:
   fadeColor: {r: 0.01, g: 0.01, b: 0.01, a: 1}
   fadeOnStart: 1
   renderQueue: 5000
---- !u!114 &1167567049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4904559947339293475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ac20df6282234e419ee9915e0fd1676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  motionTarget: {fileID: 4904559947339267849}
-  effectColor: {r: 0, g: 0, b: 0, a: 0.9490196}
-  effectCoverage: 0.8
-  effectFeather: 0.13
-  effectSkybox: {fileID: 8900000, guid: 814f7c32c471f9844ac9ac3b628fd10b, type: 3}
-  applyColorToBackground: 0
-  useAngularVelocity: 0
-  angularVelocityStrength: 0.9
-  angularVelocityMin: 0
-  angularVelocityMax: 180
-  angularVelocitySmoothing: 0.15
-  useAcceleration: 0
-  accelerationStrength: 0.1
-  accelerationMin: 0
-  accelerationMax: 0
-  accelerationSmoothing: 0.15
-  useVelocity: 1
-  velocityStrength: 0.8
-  velocityMin: 0
-  velocityMax: 2
-  velocitySmoothing: 0.15
-  motionEffectTarget: {fileID: 0}
-  useCounterMotion: 0
-  counterRotationStrength: 0.5
-  counterRotationPerAxis: {x: 0, y: 1, z: 0}
-  useArtificialTilt: 0
-  tiltStrength: 2
-  tiltMaxAngles: {x: 0, y: 0}
-  tiltSmoothTime: 0
-  framerateDivision: 1
-  divideTranslation: 0
-  divideRotation: 0
-  _debugForceOn: 0
-  _debugForceValue: 0
-  backgroundMode: 0
-  effectOverlay: 0
-  _cageParent: {fileID: 0}
-  cageDownsample: 0
-  cageAntiAliasing: 0
-  cageUpdateEveryFrame: 0
-  cageFogDensity: 0.05
-  cageFogPower: 2
-  cageFogBlend: 1
-  maskMode: 0
-  blurDownsample: 3
-  blurDistance: 3
-  blurPasses: 3
-  blurSamples: 2
-  irisZRejection: 1
-  counterVelocityMode: 0
-  counterVelocityResetDistance: 2
-  counterVelocityResetTime: 0
-  counterVelocityStrength: 0.5
-  counterVelocityPerAxis: {x: 1, y: 1, z: 1}
 --- !u!114 &610446590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4832,7 +4766,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4904559947339293475}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
@@ -4885,6 +4819,58 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &628067589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4904559947339293475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0509641f74d9c24c80e405cf0068b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motionTarget: {fileID: 4904559947339267849}
+  effectColor: {r: 0, g: 0, b: 0, a: 0.9411765}
+  effectCoverage: 0.8
+  effectFeather: 0.13
+  effectSkybox: {fileID: 0}
+  applyColorToBackground: 0
+  useAngularVelocity: 0
+  angularVelocityStrength: 1
+  angularVelocityMin: 0
+  angularVelocityMax: 180
+  angularVelocitySmoothing: 0.15
+  useAcceleration: 0
+  accelerationStrength: 1
+  accelerationMin: 0
+  accelerationMax: 0
+  accelerationSmoothing: 0.15
+  useVelocity: 1
+  velocityStrength: 0.8
+  velocityMin: 0
+  velocityMax: 2
+  velocitySmoothing: 0.15
+  motionEffectTarget: {fileID: 0}
+  useCounterMotion: 0
+  counterRotationStrength: 1
+  counterRotationPerAxis: {x: 0, y: 1, z: 0}
+  useArtificialTilt: 0
+  tiltStrength: 0
+  tiltMaxAngles: {x: 5, y: 5}
+  tiltSmoothTime: 0
+  framerateDivision: 1
+  divideTranslation: 1
+  divideRotation: 1
+  _debugForceOn: 0
+  _debugForceValue: 0
+  drawSkybox: 0
+  useMask: 0
+  drawBeforeTransparent: 0
+  stencilReference: 1
+  stencilMask: 255
+  stencilBias: 1
 --- !u!1 &4904559947339293477
 GameObject:
   m_ObjectHideFlags: 0
@@ -5086,10 +5072,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skipIntro: 0
-  vignette: {fileID: 1167567049}
-  vignettePresetDefault: {fileID: 11400000, guid: c66160a130fb6834084a149625330eba,
+  vignette: {fileID: 628067589}
+  vignettePresetDefault: {fileID: 11400000, guid: 17a75a1ed8284714cbd4a977f2537c38,
     type: 2}
-  vignettePresetRed: {fileID: 11400000, guid: e537633a5cf7eb743addd2dc09134e6a, type: 2}
+  vignettePresetRed: {fileID: 11400000, guid: 3bd27142e5e993a4380147a62cfbb00b, type: 2}
   buttonSound: {fileID: 2489673264240306837}
   laser: {fileID: 1670354280}
   heartBeat: {fileID: 1591400662}
@@ -5117,6 +5103,7 @@ MonoBehaviour:
   - {fileID: 737747300}
   - {fileID: 1121531725}
   - {fileID: 2007946576}
+  - {fileID: 5557176558771447419}
 --- !u!1 &4904559947339293481
 GameObject:
   m_ObjectHideFlags: 0
