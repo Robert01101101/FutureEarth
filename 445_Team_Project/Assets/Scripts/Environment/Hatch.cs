@@ -8,7 +8,7 @@ public class Hatch : MonoBehaviour
     public AudioSource ambient;
     AudioSource audio;
     Animator animator;
-    bool done = true;
+    bool done = false;
 
     private void Start()
     {

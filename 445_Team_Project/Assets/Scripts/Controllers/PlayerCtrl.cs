@@ -99,12 +99,14 @@ public class PlayerCtrl : MonoBehaviour
 
     /////////////////////////////////////////////////////////////////////// GENERAL AUDIO /////////////////////////////////////////////
     private int parts = 0;
+    private int reminder = 0;
     public void PlayPickupSound()
     {
         pickupSound.Stop();
         pickupSound.Play();
 
         parts++;
+        
         if (parts == 1)
         {
             PlayClippyAudio(13);
@@ -117,8 +119,16 @@ public class PlayerCtrl : MonoBehaviour
         }
         else if (GameCtrl.CheckIfEnoughParts() && GameCtrl.GetWaterFilterCount() < 1)
         {
-            PlayClippyAudio(16);
-            StartCoroutine(PlantTreesAudio());
+            if (reminder == 0)
+            {
+                PlayClippyAudio(16);
+                StartCoroutine(PlantTreesAudio());
+                reminder++;
+            } else
+            {
+                reminder++;
+                if (reminder > 3) reminder = 0;
+            }
         }
     }
 

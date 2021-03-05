@@ -96,11 +96,11 @@ public class SpawnEnemy : MonoBehaviour
         //update min & max targets based on tree count
         if (GameCtrl.GetTreeCount() < 50)
         {
-            minEnemies = (int)(Util.mapVal(GameCtrl.GetTreeCount(), 0, 50, 8, 16));
+            minEnemies = (int)(Util.mapVal(GameCtrl.GetTreeCount(), 0, 50, 9, 17));
             maxEnemies = minEnemies * 2;
         } else
         {
-            minEnemies = (int)(Util.mapVal(GameCtrl.GetTreeCount(), 50, 100, 16, 5));
+            minEnemies = (int)(Util.mapVal(GameCtrl.GetTreeCount(), 50, 100, 17, 12));
             maxEnemies = minEnemies * 2;
         }
     }

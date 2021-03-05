@@ -10,6 +10,8 @@ public class WaterFilter : MonoBehaviour
     bool floating = true;
     bool thrown = false;
     bool done = false;
+    AudioSource dropAudio;
+    public AudioSource ambient;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,7 @@ public class WaterFilter : MonoBehaviour
         grabbable = GetComponent<OVRGrabbable>();
         rb = GetComponent<Rigidbody>();
         myCollider = GetComponent<Collider>();
+        dropAudio = GetComponent<AudioSource>();
 
         /*
         Collider [] playerColliders = PlayerCtrl.playerCtrl.gameObject.GetComponentsInChildren<Collider>(true);
@@ -78,6 +81,8 @@ public class WaterFilter : MonoBehaviour
             rb.isKinematic = true;
             transform.position = hit.point + Vector3.up * .4f;
             transform.rotation = Quaternion.identity;
+            dropAudio.Play();
+            ambient.Play();
 
         }
         else
