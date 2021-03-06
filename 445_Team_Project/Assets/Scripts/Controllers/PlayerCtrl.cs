@@ -143,6 +143,10 @@ public class PlayerCtrl : MonoBehaviour
     /////////////////////////////////////////////////////////////////////// CLIPPY AUDIO / NARRATIVE HARDCODING ///////////////////////
     public void PlayClippyAudio(int clip)
     {
+        for(int i=0; i<21; i++)
+        {
+            if (clippyAudio[i].isPlaying) clippyAudio[i].Stop();
+        }
         if (clippyAudio[clip - 1].isPlaying) clippyAudio[clip - 1].Stop();
         clippyAudio[clip].Play();
 

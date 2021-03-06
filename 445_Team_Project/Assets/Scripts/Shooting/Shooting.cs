@@ -6,7 +6,7 @@ public class Shooting : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform barrelLocation;
-    public float shotPower = 500f;
+    float shotPower = 500f;
     public float damage = 10f;
     public OVRInput.Button shootingButton;
     private GameObject bulletInstance;
@@ -30,6 +30,7 @@ public class Shooting : MonoBehaviour
     {
         //muzzleFlash = Instantiate(muzzleFlash, barrelLocation.position, barrelLocation.rotation);
         bulletInstance = Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation);
+        bulletInstance.transform.rotation *= Quaternion.Euler(0, -90, 0);
         bulletInstance.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
         PlayerCtrl.playerCtrl.laser.Stop();
         PlayerCtrl.playerCtrl.laser.Play();

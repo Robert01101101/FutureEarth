@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2912992260509558820}
   - component: {fileID: 8157849426582616749}
   - component: {fileID: 1333561156711283698}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 2824792615891366230}
   - component: {fileID: 3215882051572157146}
   - component: {fileID: 4748470478946664086}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 6215069615423814323}
   - component: {fileID: 4262488122668573734}
   - component: {fileID: 9117690102982347479}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 1945950577989016376}
   - component: {fileID: 3978574734364576521}
   - component: {fileID: 3029162779782510749}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8972033362230870518}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: barrelLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 6316719711839775558}
   - component: {fileID: 5319970812028299540}
   - component: {fileID: 332207515685137418}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Clippy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 5462365298623560769}
   - component: {fileID: 8721546734973540716}
   - component: {fileID: 5523264420374392027}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ClippyBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -722,6 +722,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9e08b904da3808745b63b907c4bdc0ba,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707266116334211615, guid: 9e08b904da3808745b63b907c4bdc0ba,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7984585981889875286, guid: 9e08b904da3808745b63b907c4bdc0ba,
         type: 3}

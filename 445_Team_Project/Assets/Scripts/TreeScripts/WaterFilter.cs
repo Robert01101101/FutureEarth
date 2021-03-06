@@ -82,7 +82,7 @@ public class WaterFilter : MonoBehaviour
             transform.position = hit.point + Vector3.up * .4f;
             transform.rotation = Quaternion.identity;
             dropAudio.Play();
-            ambient.Play();
+            ambient.enabled = true;
 
         }
         else
