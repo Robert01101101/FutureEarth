@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hatch : MonoBehaviour
 {
     //Open hatch when player pushes against it, by triggering an animation.
-    public AudioSource ambient;
+    public AudioSource ambient, waves1, waves2;
     AudioSource audio;
     Animator animator;
     bool done = false;
@@ -26,6 +26,8 @@ public class Hatch : MonoBehaviour
                 done = true;
                 audio.Play();
                 ambient.enabled = true;
+                waves1.enabled = true;
+                waves2.enabled = true;
             }
         }
     }

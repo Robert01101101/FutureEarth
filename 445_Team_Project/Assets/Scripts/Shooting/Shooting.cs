@@ -11,6 +11,7 @@ public class Shooting : MonoBehaviour
     public OVRInput.Button shootingButton;
     private GameObject bulletInstance;
     private bool enabled = false;
+    public GameObject muzzleFlash;
 
     // Update is called once per frame
     void Update()
@@ -27,6 +28,7 @@ public class Shooting : MonoBehaviour
     //Shooting
     void shoot()
     {
+        //muzzleFlash = Instantiate(muzzleFlash, barrelLocation.position, barrelLocation.rotation);
         bulletInstance = Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation);
         bulletInstance.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
         PlayerCtrl.playerCtrl.laser.Stop();
