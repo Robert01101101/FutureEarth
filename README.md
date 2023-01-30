@@ -1,24 +1,27 @@
-# 445 Team Project
+# Future Eatch
 
-Created for the course IAT 445 (Interactive Environments) as taught at Simon Fraser University by our instructor Steve DiPaola and our TA Alex Kitson.
+[Project Page](https://rmichels.com/futureEarth)
+
+[Download from SideQuest](https://sidequestvr.com/app/2597/future-earth)
+
+[Team Blog](https://404teamnotfound444314077.wordpress.com/)
+
+The team blog includes process documents, such as the project brief, concept sketches, design docs and video documentation as well as trailers.
 
 ## About
 
 Future Earth is a VR adventure game set in a dystopian future, where the player has to bring life to earth by fighting droids and building sustainable technologies to grow trees.
 
-### Team Members
+![Screenshot](https://rmichels.com/assets/img/futureearth/11.jpg "Screenshot")
+![Screenshot](https://rmichels.com/assets/img/futureearth/14.jpg "Screenshot")
+![Screenshot](https://rmichels.com/assets/img/futureearth/19.jpg "Screenshot")
+![Screenshot](https://rmichels.com/assets/img/futureearth/20.jpg "Screenshot")
 
+## Contributors
 * Kahn Dinh
 * Keefe Liew
 * Robert Michels
 * Yashu Estela Xu
 
-### Project Website
-
-<https://404teamnotfound444314077.wordpress.com/>
-
-The project website includes process documents, such as the project brief, concept sketches, design docs and video documentation as well as trailers.
-
-## Update Notes (2021/01/03)
-
-The project is currently being worked on for better presentation. The plan is to make it available on SideQuest by the end of January. A major factor is performance optimization, for which we had to disable Post-Processing. This changes the mood of the project a lot. If you'd like to see the original version, access the `postProcessingEnabled` branch. Otherwise, refer to the `main` branch for the most recent stable version.
+## References
+* Developed as part of the Interactive Environments course IAT 445, at Simon Fraser University, taught by our instructor Steve DiPaola and our TA Alex Kitson.
