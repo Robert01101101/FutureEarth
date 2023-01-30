@@ -25,3 +25,9 @@ Future Earth is a VR adventure game set in a dystopian future, where the player 
 
 ## References
 * Developed as part of the Interactive Environments course IAT 445, at Simon Fraser University, taught by our instructor Steve DiPaola and our TA Alex Kitson.
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
