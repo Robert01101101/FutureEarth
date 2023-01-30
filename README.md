@@ -14,9 +14,6 @@ Future Earth is a VR adventure game set in a dystopian future, where the player 
 
 | Screenshots                                                                    | Screenshots                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| ![Screenshot](https://rmichels.com/assets/img/futureearth/11.jpg "Screenshot") | ![Screenshot](https://rmichels.com/assets/img/futureearth/14.jpg "Screenshot") |
-| ![Screenshot](https://rmichels.com/assets/img/futureearth/19.jpg "Screenshot") | ![Screenshot](https://rmichels.com/assets/img/futureearth/20.jpg "Screenshot") |
-
 | [![Screenshot](https://rmichels.com/assets/img/futureearth/11.jpg)](https://sidequestvr.com/app/2597/future-earth) | [![Screenshot](https://rmichels.com/assets/img/futureearth/14.jpg)](https://sidequestvr.com/app/2597/future-earth) |
 | [![Screenshot](https://rmichels.com/assets/img/futureearth/19.jpg)](https://sidequestvr.com/app/2597/future-earth) | [![Screenshot](https://rmichels.com/assets/img/futureearth/20.jpg)](https://sidequestvr.com/app/2597/future-earth) |
 
