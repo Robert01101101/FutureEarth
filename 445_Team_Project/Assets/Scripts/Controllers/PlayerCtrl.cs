@@ -170,17 +170,18 @@ public class PlayerCtrl : MonoBehaviour
 
         //has landed
         PlayClippyAudio(3);
+        yield return new WaitForSeconds(8);
         ovrPlayerController.SetHaltUpdateMovement(false);
         GameObject.Find("Hatch").GetComponent<Hatch>().SetReady();
-        yield return new WaitForSeconds(26);
+        yield return new WaitForSeconds(14);
 
 
         //first step
         PlayClippyAudio(4);
-        yield return new WaitForSeconds(11);
+        yield return new WaitForSeconds(9);
         //explore
         PlayClippyAudio(5);
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(13);
 
         //beginBrief
         PlayClippyAudio(6);

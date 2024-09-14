@@ -6,7 +6,7 @@ public class Shooting : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform barrelLocation;
-    float shotPower = 500f;
+    float shotPower = 1200f;
     public float damage = 10f;
     public OVRInput.Button shootingButton;
     private GameObject bulletInstance;

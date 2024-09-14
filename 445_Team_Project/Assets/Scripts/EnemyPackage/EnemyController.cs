@@ -32,7 +32,8 @@ public class EnemyController : MonoBehaviour
     //Eyes
     public MeshRenderer eyeRenderer, altIndicator;
     public Material goodMat, offMat;
-    
+
+    [SerializeField] private GameObject deathFxPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -102,7 +103,9 @@ public class EnemyController : MonoBehaviour
     {
         dying = true;
         GameCtrl.spawnEnemy.RemoveEnemy();
-        
+
+        Instantiate(deathFxPrefab, transform.position, transform.rotation);
+
         if (GameCtrl.partsFound < 3) { 
             if (GameCtrl.partsFound == 0) { GameCtrl.partsFound++; Instantiate(partArray[0], transform.position, transform.rotation); Destroy(gameObject); }
             else if (GameCtrl.partsFound == 1) { GameCtrl.partsFound++; Instantiate(partArray[1], transform.position, transform.rotation); Destroy(gameObject); }

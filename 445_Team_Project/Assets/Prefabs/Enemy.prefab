@@ -207,6 +207,8 @@ MonoBehaviour:
   altIndicator: {fileID: 261407261408231626}
   goodMat: {fileID: 2100000, guid: c1aea7442c3cdd74b95e0cb96617b0c6, type: 2}
   offMat: {fileID: 2100000, guid: 15ac5cfab58d3034c914d4fb8bb00c8e, type: 2}
+  deathFxPrefab: {fileID: 5567574026459563383, guid: 2ab0e1ca23c0bc441bb6c59c41d9e03e,
+    type: 3}
 --- !u!114 &4898928675045336367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,9 +231,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b3ae36bd85d17a24db5aa6db665f948c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d61073689f6782540a10d39d4d965cdf, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -526,6 +528,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrashBot_Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7010963609754389578, guid: 59b15ab441434424fb966599ee88ab77,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -543,6 +555,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -554,16 +571,6 @@ PrefabInstance:
     - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7638143371439609584, guid: 59b15ab441434424fb966599ee88ab77,
